@@ -1,0 +1,151 @@
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+// @material-ui/icons
+import Face from "@material-ui/icons/Face";
+import RecordVoiceOver from "@material-ui/icons/RecordVoiceOver";
+import Email from "@material-ui/icons/Email";
+import Warning from "@material-ui/icons/Warning";
+
+// @material-ui/core components
+import withStyles from "@material-ui/core/styles/withStyles";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+
+// core components
+import GridContainer from "components/Grid/GridContainer.js";
+import GridItem from "components/Grid/GridItem.js";
+import PictureUpload from "components/CustomUpload/PictureUpload.js";
+import CustomInput from "components/CustomInput/CustomInput.js";
+import Danger from "components/Typography/Danger.js";
+import Button from "components/CustomButtons/Button.js";
+
+const style = {
+  infoText: {
+    fontWeight: "300",
+    margin: "10px 0 30px",
+    textAlign: "center"
+  },
+  inputAdornmentIcon: {
+    color: "#555"
+  },
+  inputAdornment: {
+    position: "relative"
+  },
+  colCentered: {
+    textAlign: "center"
+  }
+};
+
+class Step3 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      forprofit: null
+    };
+  }
+  sendState() {
+    return this.state;
+  }
+
+  isValidated() {
+    return this.state.forprofit === true;
+  }
+
+  render() {
+    const { classes } = this.props;
+    return (
+    <>
+    <GridContainer justify="center">
+        <GridItem xs={12} sm={12}>
+          <h4 className={classes.infoText}>
+          Thank you! Please fill out the following information so we may complete your Business profile:
+          </h4>
+        </GridItem>
+        <GridItem xs={12} sm={7}>
+          <CustomInput
+            labelText="Street Name"
+            id="streetname"
+            formControlProps={{
+              fullWidth: true
+            }}
+          />
+        </GridItem>
+        <GridItem xs={12} sm={3}>
+          <CustomInput
+            labelText="Street No."
+            id="streetno"
+            formControlProps={{
+              fullWidth: true
+            }}
+          />
+        </GridItem>
+        <GridItem xs={12} sm={5}>
+          <CustomInput
+            labelText="City"
+            id="city"
+            formControlProps={{
+              fullWidth: true
+            }}
+          />
+        </GridItem>
+        <GridItem xs={12} sm={5}>
+          <FormControl fullWidth className={classes.selectFormControl}>
+            <InputLabel htmlFor="simple-select" className={classes.selectLabel}>
+              Choose City
+            </InputLabel>
+            <Select
+              MenuProps={{
+                className: classes.selectMenu
+              }}
+              classes={{
+                select: classes.select
+              }}
+              value={this.state.simpleSelect}
+              onChange={this.handleSimple}
+              inputProps={{
+                name: "simpleSelect",
+                id: "simple-select"
+              }}
+            >
+              <MenuItem
+                disabled
+                classes={{
+                  root: classes.selectMenuItem
+                }}
+              >
+                Country
+              </MenuItem>
+              <MenuItem
+                classes={{
+                  root: classes.selectMenuItem,
+                  selected: classes.selectMenuItemSelected
+                }}
+                value="2"
+              >
+                France
+              </MenuItem>
+              <MenuItem
+                classes={{
+                  root: classes.selectMenuItem,
+                  selected: classes.selectMenuItemSelected
+                }}
+                value="3"
+              >
+                Romania
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </GridItem>
+      </GridContainer>      
+      </>
+    );
+  }
+}
+
+Step3.propTypes = {
+  classes: PropTypes.object
+};
+
+export default withStyles(style)(Step3);
