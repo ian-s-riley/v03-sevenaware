@@ -89,50 +89,16 @@ export default function Dashboard() {
         <GridItem xs={12} sm={12} md={12} lg={12}>
         <Card product className={classes.cardHover}>
             <CardHeader image className={classes.cardHeaderHover}>
-              <a href="#" onClick={e => e.preventDefault()}>
-                <img src={priceImage1} alt="..." />
-              </a>
-            </CardHeader>
-            <CardBody>
-              <NavLink
+            <NavLink
                 to="/admin/eligibility"
                 className={
                   classes.itemLink + " " + classes.userCollapseLinks
                 }
               >
-                <div className={classes.cardHoverUnder}>
-                <Tooltip
-                  id="tooltip-top"
-                  title="View"
-                  placement="bottom"
-                  classes={{ tooltip: classes.tooltip }}
-                >
-                  <Button color="transparent" simple justIcon>
-                    <ArtTrack className={classes.underChartIcons} />
-                  </Button>
-                </Tooltip>
-                <Tooltip
-                  id="tooltip-top"
-                  title="Edit"
-                  placement="bottom"
-                  classes={{ tooltip: classes.tooltip }}
-                >
-                  <Button color="success" simple justIcon>
-                    <Refresh className={classes.underChartIcons} />
-                  </Button>
-                </Tooltip>
-                <Tooltip
-                  id="tooltip-top"
-                  title="Remove"
-                  placement="bottom"
-                  classes={{ tooltip: classes.tooltip }}
-                >
-                  <Button color="danger" simple justIcon>
-                    <Edit className={classes.underChartIcons} />
-                  </Button>
-                </Tooltip>
-              </div>
-              </NavLink>               
+              <img src={priceImage1} alt="..." />
+              </NavLink>
+            </CardHeader>
+            <CardBody>                                      
               <h4 className={classes.cardProductTitle}>
                 <a href="#pablo" onClick={e => e.preventDefault()}>
                   We'll need a little more information
@@ -147,7 +113,7 @@ export default function Dashboard() {
                 <h4>Approval</h4>
               </div>
               <div className={`${classes.stats} ${classes.productStats}`}>
-                <Place />LexisNexis
+                <Place />Lexis/Nexis
               </div>
             </CardFooter>
           </Card>
@@ -162,7 +128,7 @@ export default function Dashboard() {
               <CardIcon color="success">
                 <Store />
               </CardIcon>
-              <p className={classes.cardCategory}>Loan Application</p>
+              <p className={classes.cardCategory}>Business & Loan Profile</p>
               <h3 className={classes.cardTitle}>$134,245</h3>
             </CardHeader>
             <CardFooter stats>

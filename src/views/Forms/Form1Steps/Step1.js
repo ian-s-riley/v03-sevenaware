@@ -1,5 +1,16 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  update,
+  selectForm,
+} from 'features/form/formSlice';
+import {
+  setFormId,
+  selectFormId,
+} from 'features/form/navigationSlice';
+
 // @material-ui/icons
 import Face from "@material-ui/icons/Face";
 import RecordVoiceOver from "@material-ui/icons/RecordVoiceOver";
@@ -35,6 +46,8 @@ const style = {
     textAlign: "center"
   }
 };
+
+
 
 class Step1 extends React.Component {
   constructor(props) {

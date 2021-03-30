@@ -58,86 +58,50 @@ class Step3 extends React.Component {
     return (
     <>
     <GridContainer justify="center">
-        <GridItem xs={12} sm={12}>
+        <GridItem xs={12} sm={8}>
           <h4 className={classes.infoText}>
           Thank you! Please fill out the following information so we may complete your Business profile:
           </h4>
         </GridItem>
-        <GridItem xs={12} sm={7}>
+        </GridContainer>
+        <GridContainer justify="center">
+        <GridItem xs={12} sm={12} md={5}>
           <CustomInput
-            labelText="Street Name"
-            id="streetname"
+            labelText="Company"
+            id="company"
             formControlProps={{
               fullWidth: true
             }}
           />
         </GridItem>
-        <GridItem xs={12} sm={3}>
+        <GridItem xs={12} sm={12} md={5}>
           <CustomInput
-            labelText="Street No."
-            id="streetno"
+            labelText="DBA (doing business as name)"
+            id="username"
+            formControlProps={{
+              fullWidth: true
+            }}
+          />
+        </GridItem>    
+        
+        <GridItem xs={12} sm={12} md={5}>
+          <CustomInput
+            labelText="TIN/FEIN"
+            id="tin"
             formControlProps={{
               fullWidth: true
             }}
           />
         </GridItem>
-        <GridItem xs={12} sm={5}>
+        <GridItem xs={12} sm={12} md={5}>
           <CustomInput
-            labelText="City"
-            id="city"
+            labelText="SSN"
+            id="ssn"
             formControlProps={{
               fullWidth: true
             }}
           />
-        </GridItem>
-        <GridItem xs={12} sm={5}>
-          <FormControl fullWidth className={classes.selectFormControl}>
-            <InputLabel htmlFor="simple-select" className={classes.selectLabel}>
-              Choose City
-            </InputLabel>
-            <Select
-              MenuProps={{
-                className: classes.selectMenu
-              }}
-              classes={{
-                select: classes.select
-              }}
-              value={this.state.simpleSelect}
-              onChange={this.handleSimple}
-              inputProps={{
-                name: "simpleSelect",
-                id: "simple-select"
-              }}
-            >
-              <MenuItem
-                disabled
-                classes={{
-                  root: classes.selectMenuItem
-                }}
-              >
-                Country
-              </MenuItem>
-              <MenuItem
-                classes={{
-                  root: classes.selectMenuItem,
-                  selected: classes.selectMenuItemSelected
-                }}
-                value="2"
-              >
-                France
-              </MenuItem>
-              <MenuItem
-                classes={{
-                  root: classes.selectMenuItem,
-                  selected: classes.selectMenuItemSelected
-                }}
-                value="3"
-              >
-                Romania
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </GridItem>
+        </GridItem>    
       </GridContainer>      
       </>
     );

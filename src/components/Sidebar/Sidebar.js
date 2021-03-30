@@ -332,23 +332,11 @@ class Sidebar extends React.Component {
         [classes.whiteAfter]: bgColor === "white"
       });
     const caret =
-      classes.caret +
-      " " +
-      cx({
-        [classes.caretRTL]: rtlActive
-      });
+      classes.caret
     const collapseItemMini =
-      classes.collapseItemMini +
-      " " +
-      cx({
-        [classes.collapseItemMiniRTL]: rtlActive
-      });
+      classes.collapseItemMini
     const photo =
-      classes.photo +
-      " " +
-      cx({
-        [classes.photoRTL]: rtlActive
-      });
+      classes.photo
     var user = (
       <div className={userWrapperClass}>
         <div className={photo}>
