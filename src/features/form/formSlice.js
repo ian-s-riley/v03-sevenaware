@@ -5,34 +5,31 @@ export const formSlice = createSlice({
   initialState: [
     {
       id: "0",
-      formName: "Form #0",
-      formCode: "form-0",
-      name: "",
-      ssn: "",
+      formName: "Eligibility",
+      formCode: "eligibility-0-restricted",
+      restricted: null,
     },
     {
       id: "1",
       formName: "Form #1",
       formCode: "form-1",
-      address1: "",
-      address2: "",
+      forProfit: null,
     }
   ],
   reducers: {
     update: (state, action) => {
-      console.log('action',action)
+      //console.log('updateForm: action',action)
+      //console.log('updateForm: state',state)
       switch(action.payload.id) {
         case "0":
-          state[action.payload.id].name = action.payload.name
-          state[action.payload.id].ssn = action.payload.ssn
+          state[action.payload.id].restricted = action.payload.restricted
           break
         case "1":
-          state[action.payload.id].address1 = action.payload.address1
-          state[action.payload.id].address2 = action.payload.address2
+          state[action.payload.id].forProfit = action.payload.forProfit
           break
         default:
           console.log('reducer action not found')
-      }      ;
+      }   
     },
   },
 });

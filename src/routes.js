@@ -27,7 +27,10 @@ import ValidationForms from "views/Forms/ValidationForms.js";
 import VectorMap from "views/Maps/VectorMap.js";
 import Widgets from "views/Widgets/Widgets.js";
 import Wizard from "views/Forms/Wizard.js";
+import Form0 from "views/Forms/Form0";
+import Form0_0 from "views/Forms/Form0_0";
 import Form1 from "views/Forms/Form1";
+import Form1_0 from "views/Forms/Form1_0";
 
 // @material-ui/icons
 import Apps from "@material-ui/icons/Apps";
@@ -49,10 +52,34 @@ var dashRoutes = [
     layout: "/admin"
   },
   {
-    path: "/eligibility",
-    name: "Eligibility",
+    path: "/eligibility0",
+    name: "Eligibility > Restricted Activities",
+    mini: "E",
+    component: Form0,
+    layout: "/admin",
+    invisible: true
+  },
+  {
+    path: "/eligibility0_0",
+    name: "Eligibility > Restricted Activities",
+    mini: "E",
+    component: Form0_0,
+    layout: "/admin",
+    invisible: true
+  },
+  {
+    path: "/eligibility1",
+    name: "Eligibility > For Profit",
     mini: "E",
     component: Form1,
+    layout: "/admin",
+    invisible: true
+  },
+  {
+    path: "/eligibility1_0",
+    name: "Eligibility > For Profit",
+    mini: "E",
+    component: Form1_0,
     layout: "/admin",
     invisible: true
   },

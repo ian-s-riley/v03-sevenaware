@@ -47,8 +47,6 @@ const style = {
   }
 };
 
-
-
 class Step1 extends React.Component {
   constructor(props) {
     super(props);
@@ -63,6 +61,11 @@ class Step1 extends React.Component {
   isValidated() {
     return this.state.restricted === false;
   }
+
+  //formId = useSelector(state => state.counter);
+  //console.log();
+
+  dispatch = useDispatch();
 
   render() {
     const { classes } = this.props;

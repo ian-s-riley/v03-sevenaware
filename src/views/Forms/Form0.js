@@ -42,11 +42,11 @@ import styles from "assets/jss/material-dashboard-pro-react/views/validationForm
 
 const useStyles = makeStyles(styles);
 
-export default function Form1() {
+export default function Form0() {
   const history = useHistory()
   const dispatch = useDispatch()
 
-  const formId = "1"
+  const formId = "0"
   const allForms = useSelector(selectForm)    
   const thisForm = allForms.find((element) => {
     return element.id === formId;
@@ -61,15 +61,15 @@ export default function Form1() {
   const nextClick = () => {
     //console.log('nextClick: form', form)    
     //a selection is required
-    if (form.forProfit === null) return false;    
+    if (form.restricted === null) return false;    
     //update the form    
     dispatch(update(form))
     //go to the next form
-    form.forProfit 
+    form.restricted 
     ? 
-    history.push("/admin/businessprofile0")    
+    history.push("/admin/eligibility0_0")
     :
-    history.push("/admin/eligibility1_0")    
+    history.push("/admin/eligibility1")
   };
   
   const classes = useStyles();
@@ -83,28 +83,37 @@ export default function Form1() {
               <Warning />
             </CardIcon>
             <h4 className={classes.cardIconTitle}>
-            Is your business a for profit entity?
+            Does your business generate revenue from any of the following activities?
             </h4>
           </CardHeader>
           <CardBody>
           <form>
           <GridContainer justify="center">
+            <GridItem xs={12} sm={8}>
+              <Table
+                    hover
+                    tableData={[
+                      [<Danger><Warning /></Danger>, "Speculative trading activities"],
+                      [<Danger><Warning /></Danger>, "Dealing in rare coins or stamps"],
+                      [<Danger><Warning /></Danger>, "Lending"],
+                      [<Danger><Warning /></Danger>, "Loan packaging"],
+                      [<Danger><Warning /></Danger>, "Pyramid sales plans"],
+                      [<Danger><Warning /></Danger>, "Firms involved in illegal activities that are against the law in the jurisdiction where the business is located (including cannabis)"],
+                      [<Danger><Warning /></Danger>, "Gambling"],
+                    ]}
+                  />
+              </GridItem>
               <GridItem xs={12} sm={12} className={classes.center}>
                 <Button
-                  color={form.forProfit ? "success" : null}
-                  onClick={() => handleChange("forProfit", true)}
+                  color={form.restricted ? "danger" : null}
+                  onClick={() => handleChange("restricted", true)}
                   >Yes</Button>
                 <Button 
-                  onClick={() => handleChange("forProfit", false)}
-                  color={form.forProfit === false ? "danger" : null}
+                  onClick={() => handleChange("restricted", false)}
+                  color={form.restricted === false ? "success" : null}
                 >No</Button>
               </GridItem>
             </GridContainer>
-            <Button
-                onClick={() => history.goBack()}
-              >
-                Previous
-              </Button>
             <Button
                 color="info"
                 onClick={nextClick}
