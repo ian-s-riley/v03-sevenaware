@@ -76,7 +76,7 @@ export default function Dashboard() {
             </CardHeader>
             <CardFooter stats>
             <NavLink
-              to="/admin/eligibility0"
+              to="/admin/restricted"
               className={
                 classes.itemLink + " " + classes.userCollapseLinks
               }
@@ -90,7 +90,7 @@ export default function Dashboard() {
         <Card product className={classes.cardHover}>
             <CardHeader image className={classes.cardHeaderHover}>
             <NavLink
-                to="/admin/eligibility"
+                to="/admin/restricted"
                 className={
                   classes.itemLink + " " + classes.userCollapseLinks
                 }

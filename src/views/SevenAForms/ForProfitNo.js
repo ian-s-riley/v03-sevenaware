@@ -39,7 +39,7 @@ import styles from "assets/jss/material-dashboard-pro-react/views/pricingPageSty
 
 const useStyles = makeStyles(styles);
 
-export default function Form1_0() {
+export default function ForProfitNo() {
   const history = useHistory()  
   const classes = useStyles();
 

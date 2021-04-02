@@ -42,7 +42,7 @@ import styles from "assets/jss/material-dashboard-pro-react/views/validationForm
 
 const useStyles = makeStyles(styles);
 
-export default function Form1() {
+export default function ForProfit() {
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -67,9 +67,9 @@ export default function Form1() {
     //go to the next form
     form.forProfit 
     ? 
-    history.push("/admin/businessprofile0")    
+    history.push("/admin/business-profile")    
     :
-    history.push("/admin/eligibility1_0")    
+    history.push("/admin/forprofit-no")    
   };
   
   const classes = useStyles();

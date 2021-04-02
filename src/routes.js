@@ -27,10 +27,12 @@ import ValidationForms from "views/Forms/ValidationForms.js";
 import VectorMap from "views/Maps/VectorMap.js";
 import Widgets from "views/Widgets/Widgets.js";
 import Wizard from "views/Forms/Wizard.js";
-import Form0 from "views/Forms/Form0";
-import Form0_0 from "views/Forms/Form0_0";
-import Form1 from "views/Forms/Form1";
-import Form1_0 from "views/Forms/Form1_0";
+import Restricted from "views/SevenAForms/Restricted";
+import RestrictedYes from "views/SevenAForms/RestrictedYes";
+import ForProfit from "views/SevenAForms/ForProfit";
+import ForProfitNo from "views/SevenAForms/ForProfitNo";
+import BusinessProfile from "views/SevenAForms/BusinessProfile";
+import BusinessAddress from "views/SevenAForms/BusinessAddress";
 
 // @material-ui/icons
 import Apps from "@material-ui/icons/Apps";
@@ -52,34 +54,50 @@ var dashRoutes = [
     layout: "/admin"
   },
   {
-    path: "/eligibility0",
+    path: "/restricted",
+    name: "Eligibility > Restricted Activities",
+    mini: "E-R",
+    component: Restricted,
+    layout: "/admin",
+    invisible: true
+  },
+  {
+    path: "/restricted-yes",
     name: "Eligibility > Restricted Activities",
     mini: "E",
-    component: Form0,
+    component: RestrictedYes,
     layout: "/admin",
     invisible: true
   },
   {
-    path: "/eligibility0_0",
-    name: "Eligibility > Restricted Activities",
-    mini: "E",
-    component: Form0_0,
-    layout: "/admin",
-    invisible: true
-  },
-  {
-    path: "/eligibility1",
+    path: "/forprofit",
     name: "Eligibility > For Profit",
     mini: "E",
-    component: Form1,
+    component: ForProfit,
     layout: "/admin",
     invisible: true
   },
   {
-    path: "/eligibility1_0",
+    path: "/forprofit-no",
     name: "Eligibility > For Profit",
     mini: "E",
-    component: Form1_0,
+    component: ForProfitNo,
+    layout: "/admin",
+    invisible: true
+  },
+  {
+    path: "/business-profile",
+    name: "Business Profile > Identification",
+    mini: "P",
+    component: BusinessProfile,
+    layout: "/admin",
+    invisible: true
+  },
+  {
+    path: "/business-address",
+    name: "Business Profile > Address",
+    mini: "P",
+    component: BusinessAddress,
     layout: "/admin",
     invisible: true
   },

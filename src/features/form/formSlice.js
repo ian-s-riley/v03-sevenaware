@@ -5,20 +5,42 @@ export const formSlice = createSlice({
   initialState: [
     {
       id: "0",
-      formName: "Eligibility",
-      formCode: "eligibility-0-restricted",
+      formName: "Eligibility Restricted Activities",
+      formCode: "restricted",
       restricted: null,
     },
     {
       id: "1",
-      formName: "Form #1",
-      formCode: "form-1",
+      formName: "Eligibility For Profit",
+      formCode: "forprofit",
       forProfit: null,
+    },
+    {
+      id: "2",
+      formName: "Business Profile",
+      formCode: "business-profile",
+      fein: "",
+      tin: "",
+      ssn: "",
+      idType: "fein",
+      businessName: "",
+      dba: "",
+    },
+    {
+      id: "3",
+      formName: "Business Address",
+      formCode: "business-address",
+      address1: "",
+      address2: "",
+      city: "",
+      state: "",
+      zip: "",
+      county: "",
     }
   ],
   reducers: {
     update: (state, action) => {
-      //console.log('updateForm: action',action)
+      console.log('updateForm: action',action)
       //console.log('updateForm: state',state)
       switch(action.payload.id) {
         case "0":
@@ -26,6 +48,22 @@ export const formSlice = createSlice({
           break
         case "1":
           state[action.payload.id].forProfit = action.payload.forProfit
+          break
+        case "2":
+          state[action.payload.id].fein = action.payload.fein
+          state[action.payload.id].tin = action.payload.tin
+          state[action.payload.id].ssn = action.payload.ssn
+          state[action.payload.id].idType = action.payload.idType
+          state[action.payload.id].businessName = action.payload.businessName
+          state[action.payload.id].dba = action.payload.dba
+          break
+        case "3":
+          state[action.payload.id].address1 = action.payload.address1
+          state[action.payload.id].address2 = action.payload.address2
+          state[action.payload.id].city = action.payload.city
+          state[action.payload.id].state = action.payload.state
+          state[action.payload.id].zip = action.payload.zip
+          state[action.payload.id].county = action.payload.county
           break
         default:
           console.log('reducer action not found')

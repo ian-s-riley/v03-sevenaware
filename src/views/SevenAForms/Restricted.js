@@ -42,7 +42,7 @@ import styles from "assets/jss/material-dashboard-pro-react/views/validationForm
 
 const useStyles = makeStyles(styles);
 
-export default function Form0() {
+export default function Restricted() {
   const history = useHistory()
   const dispatch = useDispatch()
 
@@ -67,9 +67,9 @@ export default function Form0() {
     //go to the next form
     form.restricted 
     ? 
-    history.push("/admin/eligibility0_0")
+    history.push("/admin/restricted-yes")
     :
-    history.push("/admin/eligibility1")
+    history.push("/admin/forprofit")
   };
   
   const classes = useStyles();
