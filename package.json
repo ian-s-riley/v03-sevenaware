@@ -28,7 +28,8 @@
     "react-scripts": "3.4.1",
     "react-swipeable-views": "0.13.9",
     "react-table": "7.1.0",
-    "react-tagsinput": "3.19.0"
+    "react-tagsinput": "3.19.0",
+    "smartystreets-javascript-sdk": "^1.7.2"
   },
   "scripts": {
     "start": "react-scripts start",

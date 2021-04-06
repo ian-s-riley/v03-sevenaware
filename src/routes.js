@@ -33,6 +33,7 @@ import ForProfit from "views/SevenAForms/ForProfit";
 import ForProfitNo from "views/SevenAForms/ForProfitNo";
 import BusinessProfile from "views/SevenAForms/BusinessProfile";
 import BusinessAddress from "views/SevenAForms/BusinessAddress";
+import FormState from "views/SevenAForms/FormState";
 
 // @material-ui/icons
 import Apps from "@material-ui/icons/Apps";
@@ -100,6 +101,14 @@ var dashRoutes = [
     component: BusinessAddress,
     layout: "/admin",
     invisible: true
+  },
+  {
+    path: "/form-state",
+    name: "Form State",
+    mini: "P",
+    component: FormState,
+    layout: "/admin",
+    invisible: false
   },
   {
     collapse: true,

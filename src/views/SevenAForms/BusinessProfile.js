@@ -70,8 +70,8 @@ export default function BusinessProfile() {
 
   // function that verifies if a string has a given length or not
   const verifyLength = (value, length) => {
-    console.log('verifyLength: length', length)
-    console.log('verifyLength: value', value)
+    //console.log('verifyLength: length', length)
+    //console.log('verifyLength: value', value)
     if (value.length >= length) {
       return true;
     }
@@ -88,7 +88,7 @@ export default function BusinessProfile() {
   }
 
   const nextClick = () => {
-    console.log('nextClick: form', form)
+    //console.log('nextClick: form', form)
     //validation
     if (numberState === "error") return false;  
     if (form.fein === "" && form.tin === "" && form.ssn === "") return false;  
@@ -112,7 +112,7 @@ export default function BusinessProfile() {
               <Warning />
             </CardIcon>
             <h4 className={classes.cardIconTitle}>
-            Thank you! Please fill out the following information so we may complete your business profile.
+            Let’s gather some initial information on your business to speed-up your application process...
             </h4>
           </CardHeader>
           <CardBody>
