@@ -33,7 +33,7 @@ import ForProfit from "views/SevenAForms/ForProfit";
 import ForProfitNo from "views/SevenAForms/ForProfitNo";
 import BusinessProfile from "views/SevenAForms/BusinessProfile";
 import BusinessAddress from "views/SevenAForms/BusinessAddress";
-import FormState from "views/SevenAForms/FormState";
+import AgreeLexisNexis from "views/SevenAForms/AgreeLexisNexis";
 
 // @material-ui/icons
 import Apps from "@material-ui/icons/Apps";
@@ -103,13 +103,13 @@ var dashRoutes = [
     invisible: true
   },
   {
-    path: "/form-state",
-    name: "Form State",
+    path: "/agree-lexisnexis",
+    name: "Business Profile > Verification",
     mini: "P",
-    component: FormState,
+    component: AgreeLexisNexis,
     layout: "/admin",
-    invisible: false
-  },
+    invisible: true
+  },  
   {
     collapse: true,
     name: "Pages",

@@ -45,19 +45,11 @@ const useStyles = makeStyles(styles);
 export default function BusinessProfile() {
   const history = useHistory()
   const dispatch = useDispatch()
-
+  
   const formId = "2"
-  const allForms = useSelector(selectForm)    
-  const thisForm = allForms.find((element) => {
-    return element.id === formId;
-  })
-  const [form, setForm] = useState(thisForm)
-  //console.log(thisForm)
+  const [form, setForm] = useState(useSelector(selectForm))
 
-  const [number, setnumber] = React.useState("");
   const [numberState, setnumberState] = React.useState("");
-
-  const [required, setrequired] = React.useState("");
   const [requiredState, setrequiredState] = React.useState("");
 
   const verifyNumber = value => {
@@ -95,7 +87,8 @@ export default function BusinessProfile() {
     if (form.businessName.replace(" ", "") === "") return false;  
 
     //update the form    
-    dispatch(update(form))
+    const thisForm = { ...form, formId: formId}
+    dispatch(update(thisForm))
 
     //go to the next form
     history.push("/admin/business-address")

@@ -42,30 +42,26 @@ import styles from "assets/jss/material-dashboard-pro-react/views/validationForm
 
 const useStyles = makeStyles(styles);
 
-export default function ForProfit() {
+export default function AgreeLexisNexis() {
   const history = useHistory()
   const dispatch = useDispatch()
 
-  const formId = "1"
+  const formId = "4"
   const [form, setForm] = useState(useSelector(selectForm))
 
-  function handleChange(id, value) {
-    setForm({ ...form, [id]: value})
+  function handleAgree() {    
+    setForm({ ...form, "agreeLexisNexis": !form.agreeLexisNexis})
   }
 
   const nextClick = () => {
-    //console.log('nextClick: form', form)    
+    console.log('nextClick: form', form)    
     //a selection is required
-    if (form.forProfit === null) return false;    
+    if (form.agreeLexisNexis !== true) return false;    
     //update the form    
     const thisForm = { ...form, formId: formId}
     dispatch(update(thisForm))
     //go to the next form
-    form.forProfit 
-    ? 
-    history.push("/admin/business-profile")    
-    :
-    history.push("/admin/forprofit-no")    
+    history.push("/admin/dashboard")
   };
   
   const classes = useStyles();
@@ -79,22 +75,51 @@ export default function ForProfit() {
               <Warning />
             </CardIcon>
             <h4 className={classes.cardIconTitle}>
-            Is your business a for profit entity?
+            Thank you, now we need your permission to contact the <a href="#" target="_blank">Lexis/Nexis</a> service:  
             </h4>
           </CardHeader>
           <CardBody>
           <form>
           <GridContainer justify="center">
-              <GridItem xs={12} sm={12} className={classes.center}>
-                <Button
-                  color={form.forProfit ? "success" : null}
-                  onClick={() => handleChange("forProfit", true)}
-                  >Yes</Button>
-                <Button 
-                  onClick={() => handleChange("forProfit", false)}
-                  color={form.forProfit === false ? "danger" : null}
-                >No</Button>
+            <GridItem xs={12} sm={8}>
+              <Table
+                    hover
+                    tableData={[
+                      [<Check />, "To automatically fill in information during your loan process."],
+                      [<Check />, "To help identify data entry mistakes and typos."],
+                      [<Check />, "To immediately verify identities & business details."],
+                      [<Check />, "To run credit and background checks."],
+                    ]}
+                  />
               </GridItem>
+              <GridItem xs={12} sm={8}><br /></GridItem>
+              <GridItem xs={12} sm={8}>
+              <div className={classes.checkboxAndRadio}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      tabIndex={-1}
+                      onClick={() => handleAgree()}
+                      checked={form.agreeLexisNexis}
+                      checkedIcon={<Check className={classes.checkedIcon} />}
+                      icon={<Check className={classes.uncheckedIcon} />}
+                      classes={{
+                        checked: classes.checked,
+                        root: classes.checkRoot
+                      }}
+                    />
+                  }
+                  classes={{
+                    label: classes.label,
+                    root: classes.labelRoot
+                  }}
+                  label="I agree to allow 7(a)ware use my information for identity & information verification. "
+                />
+              </div>  
+              </GridItem>
+            </GridContainer>
+            <GridContainer justify="center">
+                 
             </GridContainer>
             <Button
                 onClick={() => history.goBack()}

@@ -47,12 +47,7 @@ export default function Restricted() {
   const dispatch = useDispatch()
 
   const formId = "0"
-  const allForms = useSelector(selectForm)    
-  const thisForm = allForms.find((element) => {
-    return element.id === formId;
-  })
-  const [form, setForm] = useState(thisForm)
-  //console.log(thisForm)
+  const [form, setForm] = useState(useSelector(selectForm))
 
   function handleChange(id, value) {
     setForm({ ...form, [id]: value})
@@ -63,7 +58,8 @@ export default function Restricted() {
     //a selection is required
     if (form.restricted === null) return false;    
     //update the form    
-    dispatch(update(form))
+    const thisForm = { ...form, formId: formId}
+    dispatch(update(thisForm))
     //go to the next form
     form.restricted 
     ? 

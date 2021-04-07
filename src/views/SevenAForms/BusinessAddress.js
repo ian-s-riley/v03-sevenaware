@@ -52,8 +52,6 @@ import Instruction from "components/Instruction/Instruction.js";
 // style for this view
 import styles from "assets/jss/material-dashboard-pro-react/views/validationFormsStyle.js";
 import notificationStyles from "assets/jss/material-dashboard-pro-react/views/notificationsStyle.js";
-import noticeModal1 from "assets/img/card-1.jpeg";
-import noticeModal2 from "assets/img/card-2.jpeg";
 
 const useStyles = makeStyles(styles);
 const useNotificationStyles = makeStyles(notificationStyles);
@@ -67,43 +65,13 @@ export default function BusinessAddress() {
   const dispatch = useDispatch()
 
   const formId = "3"
-  const allForms = useSelector(selectForm)       
-
-  const thisForm = allForms.find((element) => {
-    return element.id === formId;
-  })
-  const [form, setForm] = useState(thisForm)
-  console.log('BusinessAddress.js: thisForm', thisForm)
-
-  const [lookup, setLookup] = useState({
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    zip: "",
-    zipPlus4: "",
-  })
-    
-  const thisUser = allForms.find((element) => {
-    return element.id === "-1";
-  })
+  const [form, setForm] = useState(useSelector(selectForm))
 
   const [noticeModal, setNoticeModal] = React.useState(false);
-
-  const [number, setnumber] = useState("");
-  const [numberState, setnumberState] = useState("");
 
   const [addressState, setAddressState] = useState("");
   const [cityState, setCityState] = useState("");
   const [zipState, setZipState] = useState("");
-
-  const verifyNumber = value => {
-    var numberRex = new RegExp("^[0-9]+$");
-    if (numberRex.test(value) && value.length === 9) {
-      return true;
-    }
-    return false;
-  };
 
   // function that verifies if a string has a given length or not
   const verifyLength = (value, length) => {
@@ -113,20 +81,20 @@ export default function BusinessAddress() {
     return false;
   };
 
-  function handleChange(e) {
-      const {id, value} = e.currentTarget;
-      setForm({ ...form, [id]: value})
+  function handleChange(e) {    
+    const {id, value} = e.currentTarget;
+    setForm({ ...form, [id]: value})
   }
 
   function useProfileAddress() {
-    //console.log('useProfileAddress: thisUser', user)
+    console.log('useProfileAddress: form', form)
     setForm({ ...form, 
-      "address1": thisUser.address1, 
-      "address2": thisUser.address2, 
-      "city": thisUser.city, 
-      "state": thisUser.state, 
-      "zip": thisUser.zip,
-      "zipPlus4": thisUser.zipPlus4,
+      "businessAddress1": form.userAddress1, 
+      "businessAddress2": form.userAddress2, 
+      "businessCity": form.userCity, 
+      "businessState": form.userState, 
+      "businessZip": form.userZip,
+      "businessZipPlus4": form.userZipPlus4,
     })
   }
 
@@ -141,14 +109,11 @@ export default function BusinessAddress() {
     if (form.address1 === "" || form.city === "" || form.state == "" || form.zip == "") return false; 
 
     let lookup1 = new Lookup();
-    //lookup1.addressee = "John Doe";
-    lookup1.street = form.address1
-    lookup1.street2 = form.address2;
-    lookup1.secondary = "";
-    lookup1.urbanization = "";  // Only applies to Puerto Rico addresses
-    lookup1.city = form.city;
-    lookup1.state = form.state;
-    lookup1.zipCode = form.zip;
+    lookup1.street = form.businessAddress1
+    lookup1.street2 = form.businessAddress2;
+    lookup1.city = form.businessCity;
+    lookup1.state = form.businessState;
+    lookup1.zipCode = form.businessZip;
     lookup1.maxCandidates = 3;
     lookup1.match = "invalid"; // "invalid" is the most permissive match,
                                // this will always return at least one result even if the address is invalid.
@@ -164,12 +129,12 @@ export default function BusinessAddress() {
   function handleSuccess(response) {
     //response.lookups.map(lookup => console.log(lookup.result));
     setForm({ ...form, 
-      "address1": response.lookups[0].result[0].deliveryLine1, 
-      "address2": response.lookups[0].result[0].deliveryLine2 || "", 
-      "city": response.lookups[0].result[0].components.cityName, 
-      "state": response.lookups[0].result[0].components.state, 
-      "zip": response.lookups[0].result[0].components.zipCode,
-      "zipPlus4": response.lookups[0].result[0].components.plus4Code,
+      "businessAddress1": response.lookups[0].result[0].deliveryLine1, 
+      "businessAddress2": response.lookups[0].result[0].deliveryLine2 || "", 
+      "businessCity": response.lookups[0].result[0].components.cityName, 
+      "businessState": response.lookups[0].result[0].components.state, 
+      "businessZip": response.lookups[0].result[0].components.zipCode,
+      "businessZipPlus4": response.lookups[0].result[0].components.plus4Code,
     }) 
   }
   
@@ -180,11 +145,11 @@ export default function BusinessAddress() {
   function handleVerifyAddress() {
     //console.log('handleVerifyAddress: form', form)
 
-    //update the form    
-    dispatch(update(form))
+    const thisForm = { ...form, formId: formId}
+    dispatch(update(thisForm))
     
     //go to the next form
-    history.push("/admin/dashboard")
+    history.push("/admin/agree-lexisnexis")
   }
   
   const classes = useStyles();
@@ -225,12 +190,12 @@ export default function BusinessAddress() {
         id="notice-modal-slide-description"
         className={notificationClasses.modalBody}
       >
-        <p>
-          {form.address1 + " " + form.address2}
+        <h5>
+          {form.businessAddress1 + " " + form.businessAddress2}
           <br />
-          {form.city + " " + form.state + " " + form.zip + "-" + form.zipPlus4} 
+          {form.businessCity + " " + form.businessState + " " + form.businessZip + "-" + form.businessZipPlus4} 
           <br />
-        </p>
+        </h5>
         <p>
           This address was verified using the SmartyStreets lookup API. Shall we continue using this validated address? 
         </p>
@@ -274,13 +239,13 @@ export default function BusinessAddress() {
           <CustomInput
                     success={addressState === "success"}
                     error={addressState === "error"}
-                    id="address1"
+                    id="businessAddress1"
                     labelText="Address 1"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
-                      value: form.address1,
+                      value: form.businessAddress1,
                       onChange: event => {
                         if (verifyLength(event.target.value, 1)) {
                           setAddressState("success");
@@ -303,13 +268,13 @@ export default function BusinessAddress() {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={8}>
                 <CustomInput
-                    id="address2"
+                    id="businessAddress2"
                     labelText="Address 2"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{  
-                      value: form.address2,
+                      value: form.businessAddress2,
                       onChange: event => {
                         handleChange(event)
                       },
@@ -323,13 +288,13 @@ export default function BusinessAddress() {
                 <CustomInput
                     success={cityState === "success"}
                     error={cityState === "error"}
-                    id="city"
+                    id="businessCity"
                     labelText="City"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
-                      value: form.city,
+                      value: form.businessCity,
                       onChange: event => {
                         if (verifyLength(event.target.value, 1)) {
                           setCityState("success");
@@ -352,13 +317,13 @@ export default function BusinessAddress() {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={2}>
                 <CustomInput
-                    id="state"
+                    id="businessState"
                     labelText="State"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{  
-                      value: form.state,
+                      value: form.businessState,
                       onChange: event => {
                         handleChange(event)
                       },
@@ -370,13 +335,13 @@ export default function BusinessAddress() {
                 <CustomInput
                     success={addressState === "success"}
                     error={addressState === "error"}
-                    id="zip"
+                    id="businessZip"
                     labelText="Zip Code"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
-                      value: form.zip,
+                      value: form.businessZip,
                       onChange: event => {
                         if (verifyLength(event.target.value, 1)) {
                           setZipState("success");
