@@ -22,7 +22,7 @@ const chartsStyle = {
   },
   legendTitle: {
     color: grayColor[0],
-    margin: "10px 0 !important",
+    margin: "20px 0 !important",
     display: "flex"
   },
   primary: {

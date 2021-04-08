@@ -58,7 +58,12 @@ export default function Restricted() {
     //a selection is required
     if (form.restricted === null) return false;    
     //update the form    
-    const thisForm = { ...form, formId: formId}
+    const thisForm = { 
+      ...form, 
+      formId: formId,
+      percentComplete: 10
+    }
+
     dispatch(update(thisForm))
     //go to the next form
     form.restricted 

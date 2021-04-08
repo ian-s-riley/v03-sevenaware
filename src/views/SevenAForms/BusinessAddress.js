@@ -145,7 +145,11 @@ export default function BusinessAddress() {
   function handleVerifyAddress() {
     //console.log('handleVerifyAddress: form', form)
 
-    const thisForm = { ...form, formId: formId}
+    const thisForm = { 
+      ...form, 
+      formId: formId,
+      percentComplete: 40
+    }
     dispatch(update(thisForm))
     
     //go to the next form

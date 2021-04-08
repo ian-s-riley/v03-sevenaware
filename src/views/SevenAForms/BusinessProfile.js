@@ -87,7 +87,11 @@ export default function BusinessProfile() {
     if (form.businessName.replace(" ", "") === "") return false;  
 
     //update the form    
-    const thisForm = { ...form, formId: formId}
+    const thisForm = { 
+      ...form, 
+      formId: formId,
+      percentComplete: 30
+    }
     dispatch(update(thisForm))
 
     //go to the next form

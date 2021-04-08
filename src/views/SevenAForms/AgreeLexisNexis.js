@@ -58,7 +58,11 @@ export default function AgreeLexisNexis() {
     //a selection is required
     if (form.agreeLexisNexis !== true) return false;    
     //update the form    
-    const thisForm = { ...form, formId: formId}
+    const thisForm = { 
+      ...form, 
+      formId: formId,
+      percentComplete: 50
+    }
     dispatch(update(thisForm))
     //go to the next form
     history.push("/admin/dashboard")

@@ -4,6 +4,7 @@ export const formSlice = createSlice({
   name: 'form',
   initialState: {
     formId: "0",
+    percentComplete: 0,
     userId: ";lkjasd867w4lkjxsv",
     userType: "borrower",
     email: "ian.public@yahoo.com",
@@ -47,9 +48,11 @@ export const formSlice = createSlice({
       switch(action.payload.formId) {
         case "0":
           state.restricted = action.payload.restricted
+          state.percentComplete = action.payload.percentComplete
           break
         case "1":
           state.forProfit = action.payload.forProfit
+          state.percentComplete = action.payload.percentComplete
           break
         case "2":
           state.fein = action.payload.fein
@@ -58,6 +61,7 @@ export const formSlice = createSlice({
           state.idType = action.payload.idType
           state.businessName = action.payload.businessName
           state.dba = action.payload.dba
+          state.percentComplete = action.payload.percentComplete
           break
         case "3":
           state.businessAddress1 = action.payload.businessAddress1
@@ -66,9 +70,11 @@ export const formSlice = createSlice({
           state.businessState = action.payload.businessState
           state.businessZip = action.payload.businessZip
           state.businessZipPlus4 = action.payload.businessZipPlus4
+          state.percentComplete = action.payload.percentComplete
           break
         case "4":
           state.agreeLexisNexis = action.payload.agreeLexisNexis
+          state.percentComplete = action.payload.percentComplete
           break
         default:
           console.log('reducer action not found')

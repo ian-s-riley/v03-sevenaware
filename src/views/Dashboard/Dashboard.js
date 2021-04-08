@@ -1,5 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import { NavLink } from "react-router-dom";
+
+//redux store
+import { useSelector } from 'react-redux';
+import {
+  selectForm,
+} from 'features/form/formSlice'
+
+// react plugin for creating charts
+import ChartistGraph from "react-chartist";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -32,6 +41,7 @@ import styles from "assets/jss/material-dashboard-pro-react/views/dashboardStyle
 
 import priceImage1 from "assets/img/percent1.jpg";
 import priceImage2 from "assets/img/desal1.jpg";
+import { blue } from "@material-ui/core/colors";
 
 const us_flag = require("assets/img/flags/US.png");
 const de_flag = require("assets/img/flags/DE.png");
@@ -58,6 +68,25 @@ const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const classes = useStyles();
+
+  const [form, setForm] = useState(useSelector(selectForm))
+  console.log('form', form)
+
+  const percentCompletedChart = {
+    data: {
+      labels: [form.percentComplete + " %", " "],
+      series: [form.percentComplete, 100-form.percentComplete],
+    },
+    options: {
+      height: "200px",
+      donut: true,
+      donutWidth: 30,
+      donutSolid: true,
+      startAngle: 270,
+      showLabel: true
+    }
+  };
+
   return (
     <div>
       <GridContainer>
@@ -71,7 +100,7 @@ export default function Dashboard() {
               </CardIcon>
               <p className={classes.cardCategory}>Eligibility</p>
               <h3 className={classes.cardTitle}>
-              21%<small>completed</small>
+              {form.percentComplete}%<small>completed</small>
               </h3>
             </CardHeader>
             <CardFooter stats>
@@ -87,15 +116,19 @@ export default function Dashboard() {
           </Card>
         </GridItem>
         <GridItem xs={12} sm={12} md={12} lg={12}>
-        <Card product className={classes.cardHover}>
-            <CardHeader image className={classes.cardHeaderHover}>
+        <Card >
+            <CardHeader>
             <NavLink
                 to="/admin/restricted"
                 className={
                   classes.itemLink + " " + classes.userCollapseLinks
                 }
               >
-              <img src={priceImage1} alt="..." />
+              <ChartistGraph
+                data={percentCompletedChart.data}
+                type="Pie"
+                options={percentCompletedChart.options}
+              />
               </NavLink>
             </CardHeader>
             <CardBody>                                      
