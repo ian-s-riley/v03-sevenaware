@@ -5,7 +5,7 @@ export const formSlice = createSlice({
   initialState: {
     formId: "0",
     percentComplete: 0,
-    userId: ";lkjasd867w4lkjxsv",
+    userId: "1",
     userType: "borrower",
     email: "ian.public@yahoo.com",
     password: "Test-123",
@@ -22,6 +22,20 @@ export const formSlice = createSlice({
     profile: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     image: "",
     sevenAwareAgree: null,
+    lenderEmail: "riley.internet@gmail.com  ",
+    lenderPassword: "Test-123",
+    lenderFirstName: "Sam",
+    lenderMiddleName: "Samuel",
+    lenderLastName: "Samuelson",
+    lenderUserAddress1: "742 Evergreen Terrace",
+    lenderUserAddress2: "",
+    lenderUserCity: "Springfield",
+    lenderUserState: "MI",
+    lenderUserZip: "48170",
+    lenderUserZipPlus4: "",
+    lenderTitle: "Origniation Specialist",
+    lenderProfile: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    lenderImage: "",    
     restricted: null,
     forProfit: null,
     fein: "",
@@ -46,6 +60,19 @@ export const formSlice = createSlice({
       console.log('updateForm: action',action)
       //console.log('updateForm: state',state)
       switch(action.payload.formId) {
+        case "-1":
+          state.firstName = action.payload.firstName
+          state.lastName = action.payload.lastName
+          state.userAddress1 = action.payload.userAddress1
+          state.userAddress2 = action.payload.userAddress2
+          state.userCity = action.payload.userCity
+          state.userState = action.payload.userState
+          state.userZip = action.payload.userZip
+          state.userZipPlus4 = action.payload.userZipPlus4
+          state.title = action.payload.title
+          state.profile = action.payload.profile
+          state.image = action.payload.image
+          break
         case "0":
           state.restricted = action.payload.restricted
           state.percentComplete = action.payload.percentComplete
