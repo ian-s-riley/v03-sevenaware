@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 // redux store
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  update,
+  updateFormAsync,
   selectForm,
 } from 'features/form/formSlice'
 
@@ -39,6 +39,7 @@ import Table from "components/Table/Table.js";
 
 // style for this view
 import styles from "assets/jss/material-dashboard-pro-react/views/validationFormsStyle.js";
+import { isFunctionOrConstructorTypeNode } from "typescript";
 
 const useStyles = makeStyles(styles);
 
@@ -46,11 +47,12 @@ export default function ForProfit() {
   const history = useHistory()
   const dispatch = useDispatch()
 
-  const formId = "1"
+  const [isDirty, setIsDirty] = useState(false)
   const [form, setForm] = useState(useSelector(selectForm))
 
   function handleChange(id, value) {
     setForm({ ...form, [id]: value})
+    setIsDirty(true)
   }
 
   const nextClick = () => {
@@ -58,12 +60,18 @@ export default function ForProfit() {
     //a selection is required
     if (form.forProfit === null) return false;    
     //update the form    
-    const thisForm = { 
-      ...form, 
-      formId: formId,
-      percentComplete: 20
-    }
-    dispatch(update(thisForm))
+    if (isDirty) {
+      const thisForm = { 
+        ...form, 
+        percentComplete: 20,
+        stage: "Profile > Business",
+        stageHeader: "Create Business Profile",
+        stageText: "Let's start with your business name.", 
+        stageNavigate: "/admin/business-profile"
+      }
+      dispatch(updateFormAsync(thisForm))
+    }    
+
     //go to the next form
     form.forProfit 
     ? 

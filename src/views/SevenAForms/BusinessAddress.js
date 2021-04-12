@@ -4,9 +4,8 @@ import { useHistory } from "react-router-dom";
 
 // redux store
 import { useSelector, useDispatch } from 'react-redux';
-
 import {
-  update,
+  updateFormAsync,
   selectForm,
 } from 'features/form/formSlice'
 
@@ -64,11 +63,10 @@ export default function BusinessAddress() {
   const history = useHistory()
   const dispatch = useDispatch()
 
-  const formId = "3"
   const [form, setForm] = useState(useSelector(selectForm))
 
+  const [isDirty, setIsDirty] = useState(false)
   const [noticeModal, setNoticeModal] = React.useState(false);
-
   const [addressState, setAddressState] = useState("");
   const [cityState, setCityState] = useState("");
   const [zipState, setZipState] = useState("");
@@ -84,6 +82,7 @@ export default function BusinessAddress() {
   function handleChange(e) {    
     const {id, value} = e.currentTarget;
     setForm({ ...form, [id]: value})
+    setIsDirty(true)
   }
 
   function useProfileAddress() {
@@ -96,6 +95,7 @@ export default function BusinessAddress() {
       "businessZip": form.userZip,
       "businessZipPlus4": form.userZipPlus4,
     })
+    setIsDirty(true)
   }
 
   let authId = "5754b539-a016-8109-970c-4c11834d47cb"
@@ -108,22 +108,27 @@ export default function BusinessAddress() {
     //validation
     if (form.address1 === "" || form.city === "" || form.state == "" || form.zip == "") return false; 
 
-    let lookup1 = new Lookup();
-    lookup1.street = form.businessAddress1
-    lookup1.street2 = form.businessAddress2;
-    lookup1.city = form.businessCity;
-    lookup1.state = form.businessState;
-    lookup1.zipCode = form.businessZip;
-    lookup1.maxCandidates = 3;
-    lookup1.match = "invalid"; // "invalid" is the most permissive match,
-                               // this will always return at least one result even if the address is invalid.
-                               // Refer to the documentation for additional MatchStrategy options.
-    
-    client.send(lookup1)    
-      .then(handleSuccess)
-      .catch(handleError);     
-    
-    setNoticeModal(true)    
+    if (isDirty) {
+      let lookup1 = new Lookup();
+      lookup1.street = form.businessAddress1
+      lookup1.street2 = form.businessAddress2;
+      lookup1.city = form.businessCity;
+      lookup1.state = form.businessState;
+      lookup1.zipCode = form.businessZip;
+      lookup1.maxCandidates = 3;
+      lookup1.match = "invalid"; // "invalid" is the most permissive match,
+                                 // this will always return at least one result even if the address is invalid.
+                                 // Refer to the documentation for additional MatchStrategy options.
+      
+      client.send(lookup1)    
+        .then(handleSuccess)
+        .catch(handleError);     
+      
+      setNoticeModal(true)  
+    } else {
+      //go to the next form
+      history.push("/admin/agree-lexisnexis")
+    }   
   }
 
   function handleSuccess(response) {
@@ -147,10 +152,13 @@ export default function BusinessAddress() {
 
     const thisForm = { 
       ...form, 
-      formId: formId,
-      percentComplete: 40
+      percentComplete: 40,
+      stage: "Profile > Terms & Conditions",
+      stageHeader: "Terms & Conditions",
+      stageText: "Finally, we'll need your permission to verify your busines through the Lexis/Nexis database.", 
+      stageNavigate: "/admin/agree-lexisnexis"
     }
-    dispatch(update(thisForm))
+    dispatch(updateFormAsync(thisForm))
     
     //go to the next form
     history.push("/admin/agree-lexisnexis")
@@ -233,7 +241,7 @@ export default function BusinessAddress() {
               <Warning />
             </CardIcon>
             <h4 className={classes.cardIconTitle}>
-            Finally, we'll need the address of your business.
+            Where is your business located?
             </h4>
           </CardHeader>
           <CardBody>
@@ -249,7 +257,7 @@ export default function BusinessAddress() {
                       fullWidth: true
                     }}
                     inputProps={{
-                      value: form.businessAddress1,
+                      value: form.businessAddress1 || "",
                       onChange: event => {
                         if (verifyLength(event.target.value, 1)) {
                           setAddressState("success");
@@ -278,7 +286,7 @@ export default function BusinessAddress() {
                       fullWidth: true
                     }}
                     inputProps={{  
-                      value: form.businessAddress2,
+                      value: form.businessAddress2 || "",
                       onChange: event => {
                         handleChange(event)
                       },
@@ -298,7 +306,7 @@ export default function BusinessAddress() {
                       fullWidth: true
                     }}
                     inputProps={{
-                      value: form.businessCity,
+                      value: form.businessCity || "",
                       onChange: event => {
                         if (verifyLength(event.target.value, 1)) {
                           setCityState("success");
@@ -327,7 +335,7 @@ export default function BusinessAddress() {
                       fullWidth: true
                     }}
                     inputProps={{  
-                      value: form.businessState,
+                      value: form.businessState || "",
                       onChange: event => {
                         handleChange(event)
                       },
@@ -345,7 +353,7 @@ export default function BusinessAddress() {
                       fullWidth: true
                     }}
                     inputProps={{
-                      value: form.businessZip,
+                      value: form.businessZip || "",
                       onChange: event => {
                         if (verifyLength(event.target.value, 1)) {
                           setZipState("success");

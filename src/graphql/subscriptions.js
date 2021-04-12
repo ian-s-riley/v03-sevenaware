@@ -1,90 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateForm = /* GraphQL */ `
-  subscription OnCreateForm {
-    onCreateForm {
-      id
-      formId
-      userId
-      description
-      percentComplete
-      restricted
-      forProfit
-      fein
-      tin
-      ssn
-      idType
-      businessName
-      dba
-      businessAddress1
-      businessAddress2
-      businessCity
-      businessState
-      businessZip
-      businessZipPlus4
-      agreeLexisNexis
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateForm = /* GraphQL */ `
-  subscription OnUpdateForm {
-    onUpdateForm {
-      id
-      formId
-      userId
-      description
-      percentComplete
-      restricted
-      forProfit
-      fein
-      tin
-      ssn
-      idType
-      businessName
-      dba
-      businessAddress1
-      businessAddress2
-      businessCity
-      businessState
-      businessZip
-      businessZipPlus4
-      agreeLexisNexis
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteForm = /* GraphQL */ `
-  subscription OnDeleteForm {
-    onDeleteForm {
-      id
-      formId
-      userId
-      description
-      percentComplete
-      restricted
-      forProfit
-      fein
-      tin
-      ssn
-      idType
-      businessName
-      dba
-      businessAddress1
-      businessAddress2
-      businessCity
-      businessState
-      businessZip
-      businessZipPlus4
-      agreeLexisNexis
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
     onCreateUser {
@@ -96,12 +12,12 @@ export const onCreateUser = /* GraphQL */ `
       firstName
       middleName
       lastName
-      address1
-      address2
-      city
-      state
-      zip
-      zipPlus4
+      userAddress1
+      userAddress2
+      userCity
+      userState
+      userZip
+      userZipPlus4
       title
       profile
       image
@@ -122,12 +38,12 @@ export const onUpdateUser = /* GraphQL */ `
       firstName
       middleName
       lastName
-      address1
-      address2
-      city
-      state
-      zip
-      zipPlus4
+      userAddress1
+      userAddress2
+      userCity
+      userState
+      userZip
+      userZipPlus4
       title
       profile
       image
@@ -148,16 +64,163 @@ export const onDeleteUser = /* GraphQL */ `
       firstName
       middleName
       lastName
-      address1
-      address2
-      city
-      state
-      zip
-      zipPlus4
+      userAddress1
+      userAddress2
+      userCity
+      userState
+      userZip
+      userZipPlus4
       title
       profile
       image
       sevenAwareAgree
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateForm = /* GraphQL */ `
+  subscription OnCreateForm {
+    onCreateForm {
+      id
+      userId
+      formId
+      percentComplete
+      loanAmount
+      stage
+      stageHeader
+      stageText
+      stageNavigate
+      stageNavigateText
+      restricted
+      forProfit
+      fein
+      tin
+      ssn
+      idType
+      businessName
+      businessImage
+      dba
+      businessAddress1
+      businessAddress2
+      businessCity
+      businessState
+      businessZip
+      businessZipPlus4
+      agreeLexisNexis
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateForm = /* GraphQL */ `
+  subscription OnUpdateForm {
+    onUpdateForm {
+      id
+      userId
+      formId
+      percentComplete
+      loanAmount
+      stage
+      stageHeader
+      stageText
+      stageNavigate
+      stageNavigateText
+      restricted
+      forProfit
+      fein
+      tin
+      ssn
+      idType
+      businessName
+      businessImage
+      dba
+      businessAddress1
+      businessAddress2
+      businessCity
+      businessState
+      businessZip
+      businessZipPlus4
+      agreeLexisNexis
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteForm = /* GraphQL */ `
+  subscription OnDeleteForm {
+    onDeleteForm {
+      id
+      userId
+      formId
+      percentComplete
+      loanAmount
+      stage
+      stageHeader
+      stageText
+      stageNavigate
+      stageNavigateText
+      restricted
+      forProfit
+      fein
+      tin
+      ssn
+      idType
+      businessName
+      businessImage
+      dba
+      businessAddress1
+      businessAddress2
+      businessCity
+      businessState
+      businessZip
+      businessZipPlus4
+      agreeLexisNexis
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateNotification = /* GraphQL */ `
+  subscription OnCreateNotification {
+    onCreateNotification {
+      id
+      fromUserId
+      toUserId
+      title
+      message
+      action
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateNotification = /* GraphQL */ `
+  subscription OnUpdateNotification {
+    onUpdateNotification {
+      id
+      fromUserId
+      toUserId
+      title
+      message
+      action
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteNotification = /* GraphQL */ `
+  subscription OnDeleteNotification {
+    onDeleteNotification {
+      id
+      fromUserId
+      toUserId
+      title
+      message
+      action
+      status
       createdAt
       updatedAt
     }

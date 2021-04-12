@@ -41,7 +41,8 @@ const useStyles = makeStyles(styles);
 export default function UserProfile() {
   const dispatch = useDispatch()
 
-  const formId = "-1"
+  const userId = "70213c91-7f7a-4790-8146-cb26cb13daf8"
+  const [formId, setFormId] = useState("-1")
   const [form, setForm] = useState(useSelector(selectForm))
 
   const [firstNameState, setFirstNameState] = useState("");
@@ -328,9 +329,6 @@ export default function UserProfile() {
               </GridContainer>
               <Button color="warning" className={classes.updateProfileButton}>
                 Switch User
-              </Button>
-              <Button color="rose" onClick={saveProfile} className={classes.updateProfileButton}>
-                Update Profile
               </Button>
               <Clearfix />
             </CardBody>

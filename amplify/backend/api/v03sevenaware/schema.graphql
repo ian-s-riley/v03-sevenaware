@@ -1,0 +1,59 @@
+type User @model {
+  id: ID!
+  userId: String
+  userType: String
+  email: String
+  password: String
+  firstName: String
+  middleName: String
+  lastName: String
+  userAddress1: String
+  userAddress2: String
+  userCity: String
+  userState: String
+  userZip: String
+  userZipPlus4: String
+  title: String
+  profile: String
+  image: String
+  sevenAwareAgree: Boolean,
+}
+
+type Form @model {
+  id: ID!
+  userId: String
+  formId: String
+  percentComplete: Int
+  loanAmount: Float
+  stage: String
+  stageHeader: String
+  stageText: String
+  stageNavigate: String
+  stageNavigateText: String
+  restricted: Boolean
+  forProfit: Boolean
+  fein: String
+  tin: String
+  ssn: String
+  idType: String
+  businessName: String
+  businessImage: String
+  dba: String
+  businessAddress1: String
+  businessAddress2: String
+  businessCity: String
+  businessState: String
+  businessZip: String
+  businessZipPlus4: String
+  agreeLexisNexis: Boolean
+}
+
+type Notification @model {
+  id: ID!
+  fromUserId: String!
+  toUserId: String!
+  title: String
+  message: String
+  action: String
+  status: String
+}

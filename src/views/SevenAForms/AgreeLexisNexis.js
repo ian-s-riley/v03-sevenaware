@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 // redux store
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  update,
+  updateFormAsync,
   selectForm,
 } from 'features/form/formSlice'
 
@@ -46,24 +46,34 @@ export default function AgreeLexisNexis() {
   const history = useHistory()
   const dispatch = useDispatch()
 
-  const formId = "4"
   const [form, setForm] = useState(useSelector(selectForm))
+  const [isDirty, setIsDirty] = useState(false)
 
   function handleAgree() {    
-    setForm({ ...form, "agreeLexisNexis": !form.agreeLexisNexis})
+    const agree = !form.agreeLexisNexis
+    console.log('handleAgree : agree', agree)
+    setForm({ ...form, "agreeLexisNexis": agree})
+    setIsDirty(true)
   }
 
   const nextClick = () => {
-    console.log('nextClick: form', form)    
+    //console.log('nextClick: form', form)    
     //a selection is required
-    if (form.agreeLexisNexis !== true) return false;    
-    //update the form    
-    const thisForm = { 
-      ...form, 
-      formId: formId,
-      percentComplete: 50
+    if (form.agreeLexisNexis !== true) return false;  
+    
+    if (isDirty) {
+      //update the form    
+      const thisForm = { 
+        ...form, 
+        percentComplete: 50,
+        stage: "Ownership",
+        stageHeader: "Businss Ownership",
+        stageText: "The SBA needs to know who owns this business.", 
+        stageNavigate: "/admin/dashboard"
+      }
+      dispatch(updateFormAsync(thisForm))
     }
-    dispatch(update(thisForm))
+    
     //go to the next form
     history.push("/admin/dashboard")
   };
@@ -104,7 +114,7 @@ export default function AgreeLexisNexis() {
                     <Checkbox
                       tabIndex={-1}
                       onClick={() => handleAgree()}
-                      checked={form.agreeLexisNexis}
+                      checked={form.agreeLexisNexis || false}
                       checkedIcon={<Check className={classes.checkedIcon} />}
                       icon={<Check className={classes.uncheckedIcon} />}
                       classes={{

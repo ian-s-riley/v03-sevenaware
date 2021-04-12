@@ -5,7 +5,8 @@ import { useHistory } from "react-router-dom";
 // redux store
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  update,
+  updateForm,
+  updateFormAsync,
   selectForm,
 } from 'features/form/formSlice'
 
@@ -46,25 +47,33 @@ export default function Restricted() {
   const history = useHistory()
   const dispatch = useDispatch()
 
-  const formId = "0"
+  const [isDirty, setIsDirty] = useState(false)
   const [form, setForm] = useState(useSelector(selectForm))
+  //console.log('useSelector(selectForm)', form)
 
   function handleChange(id, value) {
     setForm({ ...form, [id]: value})
+    setIsDirty(true)
   }
 
-  const nextClick = () => {
-    //console.log('nextClick: form', form)    
+  const nextClick = () => {    
     //a selection is required
     if (form.restricted === null) return false;    
     //update the form    
-    const thisForm = { 
-      ...form, 
-      formId: formId,
-      percentComplete: 10
-    }
+    if (isDirty) {
+      const thisForm = { 
+        ...form, 
+        percentComplete: 10,
+        stage: "Eligibility > ForProfit",
+        stageHeader: "Verify Eligibility",
+        stageText: "Next, we'll need to know your profit structure for SBA loans.", 
+        stageNavigate: "/admin/forprofit"
+      }
 
-    dispatch(update(thisForm))
+      //console.log('nextClick: thisForm', thisForm)    
+      dispatch(updateFormAsync(thisForm))
+    }    
+
     //go to the next form
     form.restricted 
     ? 
@@ -116,12 +125,17 @@ export default function Restricted() {
               </GridItem>
             </GridContainer>
             <Button
+              onClick={() => history.goBack()}
+            >
+              Previous
+            </Button>
+            <Button
                 color="info"
                 onClick={nextClick}
                 className={classes.registerButton}
               >
-                Next
-              </Button>
+              Next
+            </Button>
           </form>
             
           </CardBody>

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 // redux store
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  update,
+  updateFormAsync,
   selectForm,
 } from 'features/form/formSlice'
 
@@ -46,9 +46,10 @@ export default function BusinessProfile() {
   const history = useHistory()
   const dispatch = useDispatch()
   
-  const formId = "2"
   const [form, setForm] = useState(useSelector(selectForm))
-
+  
+  const [isDirty, setIsDirty] = useState(false)
+  const [idType, setIdType] = useState("fein")
   const [numberState, setnumberState] = React.useState("");
   const [requiredState, setrequiredState] = React.useState("");
 
@@ -73,26 +74,35 @@ export default function BusinessProfile() {
   function handleChange(e) {
       const {id, value} = e.currentTarget;
       setForm({ ...form, [id]: value})
+      setIsDirty(true)
   }
 
-  function setIdType(idType) {
+  function handleSetIdType(idType) {
+    setIdType(idType)
     setForm({ ...form, "idType": idType})
+    setIsDirty(true)
   }
 
   const nextClick = () => {
     //console.log('nextClick: form', form)
+    console.log('nextClick: isDirty',  isDirty)
     //validation
     if (numberState === "error") return false;  
     if (form.fein === "" && form.tin === "" && form.ssn === "") return false;  
     if (form.businessName.replace(" ", "") === "") return false;  
 
-    //update the form    
-    const thisForm = { 
-      ...form, 
-      formId: formId,
-      percentComplete: 30
-    }
-    dispatch(update(thisForm))
+    if (isDirty) {
+      //update the form    
+      const thisForm = { 
+        ...form, 
+        percentComplete: 30,
+        stage: "Profile > Address",
+        stageHeader: "Business Address",
+        stageText: "We'll need to know where your business is located.", 
+        stageNavigate: "/admin/business-address"
+      }
+      dispatch(updateFormAsync(thisForm))
+    }    
 
     //go to the next form
     history.push("/admin/business-address")
@@ -125,7 +135,7 @@ export default function BusinessProfile() {
                       fullWidth: true
                     }}
                     inputProps={{
-                      value: form.businessName,
+                      value: form.businessName || "",
                       onChange: event => {
                         if (verifyLength(event.target.value, 1)) {
                           setrequiredState("success");
@@ -154,7 +164,7 @@ export default function BusinessProfile() {
                       fullWidth: true
                     }}
                     inputProps={{  
-                      value: form.dba,
+                      value: form.dba || "",
                       onChange: event => {
                         handleChange(event)
                       },
@@ -163,7 +173,7 @@ export default function BusinessProfile() {
                   />
             </GridItem>
             <GridItem xs={12} sm={8}><br/></GridItem>
-            {(form.idType === "fein") && 
+            {(idType === "fein") && 
             <GridItem xs={12} sm={8}>
                 <CustomInput
                 success={numberState === "success"}
@@ -174,7 +184,7 @@ export default function BusinessProfile() {
                     fullWidth: true
                 }}
                 inputProps={{                    
-                    value: form.fein,
+                    value: form.fein || "",
                     onChange: event => {
                     if (verifyNumber(event.target.value)) {
                         setnumberState("success");
@@ -196,7 +206,7 @@ export default function BusinessProfile() {
                 />
             </GridItem>
             }
-            {(form.idType === "tin") && 
+            {(idType === "tin") && 
             <GridItem xs={12} sm={8}>
                 <CustomInput
                 success={numberState === "success"}
@@ -207,7 +217,7 @@ export default function BusinessProfile() {
                     fullWidth: true
                 }}
                 inputProps={{
-                    value: form.tin,
+                    value: form.tin || "",
                     onChange: event => {
                     if (verifyNumber(event.target.value)) {
                         setnumberState("success");
@@ -229,18 +239,18 @@ export default function BusinessProfile() {
                 />
             </GridItem>
             }
-            {(form.idType === "ssn") && 
+            {(idType === "ssn") && 
             <GridItem xs={12} sm={8}>
                 <CustomInput
                 success={numberState === "success"}
                 error={numberState === "error"}
-                id="fein"
+                id="ssn"
                 labelText="Social Security Number (SSN)"
                 formControlProps={{
                     fullWidth: true
                 }}
                 inputProps={{
-                    value: form.ssn,
+                    value: form.ssn || "",
                     onChange: event => {
                     if (verifyNumber(event.target.value)) {
                         setnumberState("success");
@@ -263,19 +273,19 @@ export default function BusinessProfile() {
             </GridItem>
             }            
             <GridItem xs={12} sm={8}>
-                {form.idType == "fein" && 
+                {idType == "fein" && 
                 <FormLabel className={classes.labelLeftHorizontal}>
-                  Don't have a FEIN? Enter your <a href="#" onClick={() => setIdType("tin")}>TIN</a> or <a href="#" onClick={() => setIdType("ssn")}>SSN</a>.
+                  Don't have a FEIN? Enter your <a href="#" onClick={() => handleSetIdType("tin")}>TIN</a> or <a href="#" onClick={() => handleSetIdType("ssn")}> SSN</a>.
                 </FormLabel>
                 }           
-                {form.idType == "tin" && 
+                {idType == "tin" && 
                 <FormLabel className={classes.labelLeftHorizontal}>
-                  Don't have a TIN? Enter your <a href="#" onClick={() => setIdType("ssn")}>SSN</a> or <a href="#" onClick={() => setIdType("fein")}>FEIN</a>.
+                  Don't have a TIN? Enter your <a href="#" onClick={() => handleSetIdType("ssn")}> SSN</a> or <a href="#" onClick={() => handleSetIdType("fein")}> FEIN</a>.
                 </FormLabel>
                 }               
-                {form.idType == "ssn" && 
+                {idType == "ssn" && 
                 <FormLabel className={classes.labelLeftHorizontal}>
-                  Don't have a SSN? Enter your <a href="#" onClick={() => setIdType("fein")}>FEIN</a> or <a href="#" onClick={() => setIdType("tin")}>TIN</a>.
+                  Don't have a SSN? Enter your <a href="#" onClick={() => handleSetIdType("fein")}> FEIN</a> or <a href="#" onClick={() => handleSetIdType("tin")}> TIN</a>.
                 </FormLabel>
                 }            
               </GridItem>

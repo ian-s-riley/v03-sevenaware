@@ -1,69 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getForm = /* GraphQL */ `
-  query GetForm($id: ID!) {
-    getForm(id: $id) {
-      id
-      formId
-      userId
-      description
-      percentComplete
-      restricted
-      forProfit
-      fein
-      tin
-      ssn
-      idType
-      businessName
-      dba
-      businessAddress1
-      businessAddress2
-      businessCity
-      businessState
-      businessZip
-      businessZipPlus4
-      agreeLexisNexis
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listForms = /* GraphQL */ `
-  query ListForms(
-    $filter: ModelFormFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listForms(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        formId
-        userId
-        description
-        percentComplete
-        restricted
-        forProfit
-        fein
-        tin
-        ssn
-        idType
-        businessName
-        dba
-        businessAddress1
-        businessAddress2
-        businessCity
-        businessState
-        businessZip
-        businessZipPlus4
-        agreeLexisNexis
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -75,12 +12,12 @@ export const getUser = /* GraphQL */ `
       firstName
       middleName
       lastName
-      address1
-      address2
-      city
-      state
-      zip
-      zipPlus4
+      userAddress1
+      userAddress2
+      userCity
+      userState
+      userZip
+      userZipPlus4
       title
       profile
       image
@@ -106,16 +43,128 @@ export const listUsers = /* GraphQL */ `
         firstName
         middleName
         lastName
-        address1
-        address2
-        city
-        state
-        zip
-        zipPlus4
+        userAddress1
+        userAddress2
+        userCity
+        userState
+        userZip
+        userZipPlus4
         title
         profile
         image
         sevenAwareAgree
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getForm = /* GraphQL */ `
+  query GetForm($id: ID!) {
+    getForm(id: $id) {
+      id
+      userId
+      formId
+      percentComplete
+      loanAmount
+      stage
+      stageHeader
+      stageText
+      stageNavigate
+      stageNavigateText
+      restricted
+      forProfit
+      fein
+      tin
+      ssn
+      idType
+      businessName
+      businessImage
+      dba
+      businessAddress1
+      businessAddress2
+      businessCity
+      businessState
+      businessZip
+      businessZipPlus4
+      agreeLexisNexis
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listForms = /* GraphQL */ `
+  query ListForms(
+    $filter: ModelFormFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listForms(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userId
+        formId
+        percentComplete
+        loanAmount
+        stage
+        stageHeader
+        stageText
+        stageNavigate
+        stageNavigateText
+        restricted
+        forProfit
+        fein
+        tin
+        ssn
+        idType
+        businessName
+        businessImage
+        dba
+        businessAddress1
+        businessAddress2
+        businessCity
+        businessState
+        businessZip
+        businessZipPlus4
+        agreeLexisNexis
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getNotification = /* GraphQL */ `
+  query GetNotification($id: ID!) {
+    getNotification(id: $id) {
+      id
+      fromUserId
+      toUserId
+      title
+      message
+      action
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listNotifications = /* GraphQL */ `
+  query ListNotifications(
+    $filter: ModelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listNotifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        fromUserId
+        toUserId
+        title
+        message
+        action
+        status
         createdAt
         updatedAt
       }

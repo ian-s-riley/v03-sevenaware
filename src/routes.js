@@ -27,6 +27,9 @@ import ValidationForms from "views/Forms/ValidationForms.js";
 import VectorMap from "views/Maps/VectorMap.js";
 import Widgets from "views/Widgets/Widgets.js";
 import Wizard from "views/Forms/Wizard.js";
+
+import BorrowerDashboard from "views/Dashboard/BorrowerDashboard.js";
+import LenderDashboard from "views/Dashboard/LenderDashboard.js";
 import Restricted from "views/SevenAForms/Restricted";
 import RestrictedYes from "views/SevenAForms/RestrictedYes";
 import ForProfit from "views/SevenAForms/ForProfit";
@@ -45,7 +48,21 @@ import Place from "@material-ui/icons/Place";
 import Timeline from "@material-ui/icons/Timeline";
 import WidgetsIcon from "@material-ui/icons/Widgets";
 
-var dashRoutes = [
+var dashRoutes = [  
+  {
+    path: "/borrower-dashboard",
+    name: "Borrower Dashboard",
+    icon: DashboardIcon,
+    component: BorrowerDashboard,
+    layout: "/admin"
+  },
+  {
+    path: "/lender-dashboard",
+    name: "Lender Dashboard",
+    icon: Apps,
+    component: LenderDashboard,
+    layout: "/admin"
+  },
   {
     path: "/dashboard",
     name: "Dashboard",
