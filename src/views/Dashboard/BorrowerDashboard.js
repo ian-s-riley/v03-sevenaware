@@ -130,7 +130,7 @@ export default function BorrowerDashboard() {
             <Card product className={classes.cardHover}>
               <CardHeader image className={classes.cardHeaderHover}>
             <NavLink
-                to="/admin/restricted"
+                to={form.stageNavigate || "/admin/restricted"}
                 className={
                   classes.itemLink + " " + classes.userCollapseLinks
                 }
@@ -164,9 +164,15 @@ export default function BorrowerDashboard() {
                       <ArtTrack className={classes.underChartIcons} />
                     </Button>
                   </Tooltip>
+                  <NavLink
+                    to="/admin/restricted"
+                    className={
+                      classes.itemLink + " " + classes.userCollapseLinks
+                    }
+                  >
                   <Tooltip
                     id="tooltip-top"
-                    title="Edit"
+                    title="Review"
                     placement="bottom"
                     classes={{ tooltip: classes.tooltip }}
                   >
@@ -174,13 +180,14 @@ export default function BorrowerDashboard() {
                       <Refresh className={classes.underChartIcons} />
                     </Button>
                   </Tooltip>
+                  </NavLink>
                   <Tooltip
                     id="tooltip-top"
-                    title="Remove"
+                    title="Contact your Lender"
                     placement="bottom"
                     classes={{ tooltip: classes.tooltip }}
                   >
-                    <Button color="danger" simple justIcon>
+                    <Button color="primary" simple justIcon>
                       <Edit className={classes.underChartIcons} />
                     </Button>
                   </Tooltip>
@@ -228,9 +235,7 @@ export default function BorrowerDashboard() {
           <GridItem xs={12} sm={12} md={12} lg={12}>
             <Card product className={classes.cardHover}>
               <CardHeader image className={classes.cardHeaderHover}>
-                <a href="#" onClick={e => e.preventDefault()}>
                   <img src={businessImage} alt="..." />
-                </a>
               </CardHeader>
               <CardBody>
                 <div className={classes.cardHoverUnder}>
@@ -244,9 +249,15 @@ export default function BorrowerDashboard() {
                       <ArtTrack className={classes.underChartIcons} />
                     </Button>
                   </Tooltip>
+                  <NavLink
+                    to="/admin/restricted"
+                    className={
+                      classes.itemLink + " " + classes.userCollapseLinks
+                    }
+                  >
                   <Tooltip
                     id="tooltip-top"
-                    title="Edit"
+                    title="Review"
                     placement="bottom"
                     classes={{ tooltip: classes.tooltip }}
                   >
@@ -254,13 +265,14 @@ export default function BorrowerDashboard() {
                       <Refresh className={classes.underChartIcons} />
                     </Button>
                   </Tooltip>
+                  </NavLink>
                   <Tooltip
                     id="tooltip-top"
-                    title="Remove"
+                    title="Contact your Lender"
                     placement="bottom"
                     classes={{ tooltip: classes.tooltip }}
                   >
-                    <Button color="danger" simple justIcon>
+                    <Button color="primary" simple justIcon>
                       <Edit className={classes.underChartIcons} />
                     </Button>
                   </Tooltip>
