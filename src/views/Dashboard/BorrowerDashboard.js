@@ -43,7 +43,7 @@ import CardFooter from "components/Card/CardFooter.js";
 import Timeline from "components/Timeline/Timeline.js";
 
 import { widgetStories } from "variables/general.js";
-import businessImage from "assets/img/business-blank.jpg";
+import businessImage from "assets/img/desal1.jpg";
 
 import styles from "assets/jss/material-dashboard-pro-react/views/dashboardStyle.js";
 import { now } from "moment";
