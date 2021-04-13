@@ -15,12 +15,12 @@ export const createUser = /* GraphQL */ `
       firstName
       middleName
       lastName
-      userAddress1
-      userAddress2
-      userCity
-      userState
-      userZip
-      userZipPlus4
+      address1
+      address2
+      city
+      state
+      zip
+      zipPlus4
       title
       profile
       image
@@ -44,12 +44,12 @@ export const updateUser = /* GraphQL */ `
       firstName
       middleName
       lastName
-      userAddress1
-      userAddress2
-      userCity
-      userState
-      userZip
-      userZipPlus4
+      address1
+      address2
+      city
+      state
+      zip
+      zipPlus4
       title
       profile
       image
@@ -73,12 +73,12 @@ export const deleteUser = /* GraphQL */ `
       firstName
       middleName
       lastName
-      userAddress1
-      userAddress2
-      userCity
-      userState
-      userZip
-      userZipPlus4
+      address1
+      address2
+      city
+      state
+      zip
+      zipPlus4
       title
       profile
       image

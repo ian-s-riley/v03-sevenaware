@@ -1,11 +1,17 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import { useHistory } from "react-router-dom";
+
+//AWS Amplify GraphQL libraries
+import { API } from 'aws-amplify';
+import { getUser } from '../../graphql/queries';
 
 // redux store
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  update,
-  selectForm,
-} from 'features/form/formSlice'
+  updateUser,
+  updateUserAsync,
+  selectUser,
+} from 'features/form/userSlice'
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -35,15 +41,26 @@ import styles from "assets/jss/material-dashboard-pro-react/views/userProfileSty
 
 import avatar from "assets/img/faces/avatar.jpg";
 
-
 const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
+  const history = useHistory()
   const dispatch = useDispatch()
+  const classes = useStyles();
 
-  const userId = "70213c91-7f7a-4790-8146-cb26cb13daf8"
-  const [formId, setFormId] = useState("-1")
-  const [form, setForm] = useState(useSelector(selectForm))
+  useEffect(() => {
+    // Specify how to clean up after this effect:
+    return function cleanup() {
+      // to stop the warning of calling setState of unmounted component
+      var id = window.setTimeout(null, 0);
+      while (id--) {
+        window.clearTimeout(id);
+      }
+    };
+  });
+
+  const [userId, setUserId] = useState("70213c91-7f7a-4790-8146-cb26cb13daf8")
+  const [user, setUser] = useState(useSelector(selectUser))  
 
   const [firstNameState, setFirstNameState] = useState("");
   const [lastNameState, setLastNameState] = useState("");
@@ -53,7 +70,21 @@ export default function UserProfile() {
   
   const usStates =  ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
 
-  const classes = useStyles();
+  useEffect(() => {
+    fetchUser()     
+  }, [userId])
+
+  async function fetchUser() {
+    const userFromAPI = await API.graphql({ query: getUser, variables: { id: userId  }});    
+    const thisUser = userFromAPI.data.getUser                     
+
+    //set the redux store
+    dispatch(updateUser(thisUser))
+
+    //set the local store
+    setUser(thisUser)  
+    console.log('fetchUser: thisUser', thisUser)    
+  }   
 
   // function that verifies if a string has a given length or not
   const verifyLength = (value, length) => {
@@ -65,21 +96,21 @@ export default function UserProfile() {
 
   function handleChange(e) {    
     const {id, value} = e.currentTarget;
-    setForm({ ...form, [id]: value})
+    setUser({ ...user, [id]: value})
   }
 
   const handleSelectState = event => {
-    console.log('handleSelectState: ', event.target.value)
-    setForm({ ...form, "userState": event.target.value})
+    //console.log('handleSelectState: ', event.target.value)
+    setUser({ ...user, "state": event.target.value})
   }
 
   function saveProfile() {
-    const thisForm = { 
-      ...form, 
-      formId: formId,
-    }
-    dispatch(update(thisForm))
+    dispatch(updateUserAsync(user))
+    
+    //go to the next form
+    history.push("/admin/borrower-dashboard")
   }
+
   
   return (
     <div>
@@ -106,7 +137,7 @@ export default function UserProfile() {
                     fullWidth: true
                   }}
                   inputProps={{
-                    value: form.firstName,
+                    value: user.firstName || "",
                     onChange: event => {
                       if (verifyLength(event.target.value, 1)) {
                         setFirstNameState("success");
@@ -137,7 +168,7 @@ export default function UserProfile() {
                     fullWidth: true
                   }}
                   inputProps={{
-                    value: form.lastName,
+                    value: user.lastName || "",
                     onChange: event => {
                       if (verifyLength(event.target.value, 1)) {
                         setLastNameState("success");
@@ -159,21 +190,18 @@ export default function UserProfile() {
                 />
                 </GridItem>                            
               </GridContainer>
-              <GridContainer>                
-
-              </GridContainer>
               <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
                 <CustomInput
                   success={addressState === "success"}
                   error={addressState === "error"}
-                  id="userAddress1"
+                  id="address1"
                   labelText="Address 1"
                   formControlProps={{
                     fullWidth: true
                   }}
                   inputProps={{
-                    value: form.userAddress1,
+                    value: user.address1 || "",
                     onChange: event => {
                       if (verifyLength(event.target.value, 1)) {
                         setAddressState("success");
@@ -196,13 +224,13 @@ export default function UserProfile() {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
-                      id="userAddress2"
+                      id="address2"
                       labelText="Address 2"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{  
-                        value: form.userAddress2,
+                        value: user.address2 || "",
                         onChange: event => {
                           handleChange(event)
                         },
@@ -214,13 +242,13 @@ export default function UserProfile() {
                   <CustomInput
                     success={cityState === "success"}
                     error={cityState === "error"}
-                    id="userCity"
+                    id="city"
                     labelText="City"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
-                      value: form.userCity,
+                      value: user.city || "",
                       onChange: event => {
                         if (verifyLength(event.target.value, 1)) {
                           setCityState("success");
@@ -262,7 +290,7 @@ export default function UserProfile() {
                             select: classes.select
                           }}
                           onChange={handleSelectState}
-                          value={form.userState}
+                          value={user.state || ""}
                           inputProps={{
                             name: "userState",
                             id: "userState"
@@ -299,13 +327,13 @@ export default function UserProfile() {
                   <CustomInput
                     success={addressState === "success"}
                     error={addressState === "error"}
-                    id="userZip"
+                    id="zip"
                     labelText="Zip Code"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
-                      value: form.userZip,
+                      value: user.zip || "",
                       onChange: event => {
                         if (verifyLength(event.target.value, 1)) {
                           setZipState("success");
@@ -327,8 +355,12 @@ export default function UserProfile() {
                   />
                 </GridItem>
               </GridContainer>
-              <Button color="warning" className={classes.updateProfileButton}>
-                Switch User
+              <Button 
+                onClick={() => saveProfile()}
+                color="rose" 
+                round 
+                className={classes.updateProfileButton}>
+                Save Profile
               </Button>
               <Clearfix />
             </CardBody>
@@ -337,31 +369,47 @@ export default function UserProfile() {
         <GridItem xs={12} sm={12} md={4}>
           <Card profile>
             <CardAvatar profile>
-              <a href="#pablo" onClick={e => e.preventDefault()}>
+              <a href="#" onClick={e => e.preventDefault()}>
                 <img src={avatar} alt="..." />
               </a>
             </CardAvatar>
             <CardBody profile>
-              <h6 className={classes.cardCategory}>CTO / CO-FOUNDER</h6>
               <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
-                  <CustomInput
-                    labelText="Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. "
-                    id="about-me"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      multiline: true,
-                      rows: 5
-                    }}
-                  />
+              <GridItem xs={12} sm={12} md={12}>
+              <CustomInput
+                      id="title"
+                      labelText="My Title"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{  
+                        value: user.title || "",
+                        onChange: event => {
+                          handleChange(event)
+                        },
+                        type: "text",      
+                      }}
+                    />
                 </GridItem>
-              </GridContainer>
-              <Button color="rose" round>
-                Update Bio
-              </Button>
+                <GridItem xs={12} sm={12} md={12}>
+              <CustomInput
+                      id="profile"
+                      labelText="Profile"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{  
+                        value: user.profile || "",
+                        multiline: true,
+                        rows: 3,
+                        onChange: event => {
+                          handleChange(event)
+                        },
+                        type: "text",      
+                      }}
+                    />
+                </GridItem>
+              </GridContainer>              
             </CardBody>
           </Card>
         </GridItem>

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { NavLink, useHistory } from "react-router-dom";
 
 //AWS Amplify GraphQL libraries
-import { API, formSection, graphqlOperation } from 'aws-amplify';
+import { API } from 'aws-amplify';
 import { getForm } from '../../graphql/queries';
 
 //redux store

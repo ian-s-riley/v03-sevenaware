@@ -12,12 +12,12 @@ export const getUser = /* GraphQL */ `
       firstName
       middleName
       lastName
-      userAddress1
-      userAddress2
-      userCity
-      userState
-      userZip
-      userZipPlus4
+      address1
+      address2
+      city
+      state
+      zip
+      zipPlus4
       title
       profile
       image
@@ -43,12 +43,12 @@ export const listUsers = /* GraphQL */ `
         firstName
         middleName
         lastName
-        userAddress1
-        userAddress2
-        userCity
-        userState
-        userZip
-        userZipPlus4
+        address1
+        address2
+        city
+        state
+        zip
+        zipPlus4
         title
         profile
         image

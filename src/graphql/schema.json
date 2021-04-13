@@ -302,7 +302,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "userAddress1",
+          "name" : "address1",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -313,7 +313,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "userAddress2",
+          "name" : "address2",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -324,7 +324,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "userCity",
+          "name" : "city",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -335,7 +335,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "userState",
+          "name" : "state",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -346,7 +346,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "userZip",
+          "name" : "zip",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -357,7 +357,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "userZipPlus4",
+          "name" : "zipPlus4",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -595,7 +595,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userAddress1",
+          "name" : "address1",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -604,7 +604,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userAddress2",
+          "name" : "address2",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -613,7 +613,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userCity",
+          "name" : "city",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -622,7 +622,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userState",
+          "name" : "state",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -631,7 +631,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userZip",
+          "name" : "zip",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -640,7 +640,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userZipPlus4",
+          "name" : "zipPlus4",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2665,7 +2665,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userAddress1",
+          "name" : "address1",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -2674,7 +2674,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userAddress2",
+          "name" : "address2",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -2683,7 +2683,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userCity",
+          "name" : "city",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -2692,7 +2692,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userState",
+          "name" : "state",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -2701,7 +2701,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userZip",
+          "name" : "zip",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -2710,7 +2710,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userZipPlus4",
+          "name" : "zipPlus4",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -2827,7 +2827,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userAddress1",
+          "name" : "address1",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2836,7 +2836,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userAddress2",
+          "name" : "address2",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2845,7 +2845,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userCity",
+          "name" : "city",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2854,7 +2854,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userState",
+          "name" : "state",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2863,7 +2863,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userZip",
+          "name" : "zip",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2872,7 +2872,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userZipPlus4",
+          "name" : "zipPlus4",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -3037,7 +3037,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userAddress1",
+          "name" : "address1",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -3046,7 +3046,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userAddress2",
+          "name" : "address2",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -3055,7 +3055,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userCity",
+          "name" : "city",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -3064,7 +3064,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userState",
+          "name" : "state",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -3073,7 +3073,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userZip",
+          "name" : "zip",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -3082,7 +3082,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userZipPlus4",
+          "name" : "zipPlus4",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -5137,14 +5137,6 @@
         "onFragment" : false,
         "onField" : false
       }, {
-        "name" : "aws_api_key",
-        "description" : "Tells the service this field/object has access authorized by an API key.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
         "name" : "deprecated",
         "description" : null,
         "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
@@ -5158,6 +5150,14 @@
           },
           "defaultValue" : "\"No longer supported\""
         } ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_api_key",
+        "description" : "Tells the service this field/object has access authorized by an API key.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
