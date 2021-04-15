@@ -75,7 +75,7 @@ export default function AgreeLexisNexis() {
     }
     
     //go to the next form
-    history.push("/admin/dashboard")
+    history.push("/admin/")
   };
   
   const classes = useStyles();

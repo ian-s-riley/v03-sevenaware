@@ -144,7 +144,7 @@ export default function LenderDashboard() {
                 forms.map(form => (
                     <GridContainer key={form.id}>
                         <GridItem xs={12} sm={12} md={4} lg={2}>
-                            {form.businessName} - $231,769.00
+                            {form.businessName}
                         </GridItem>
                         <GridItem xs={12} sm={12} md={8} lg={10}>
                             <CustomLinearProgress
