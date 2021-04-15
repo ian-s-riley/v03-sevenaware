@@ -16,5 +16,19 @@
         }
       }
     }
+  },
+  "auth": {
+    "v03sevenawaref8bdeb32": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
+  "storage": {
+    "sevenawareversionthree": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

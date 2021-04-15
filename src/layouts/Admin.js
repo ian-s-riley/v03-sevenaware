@@ -1,6 +1,12 @@
 import React from "react";
 import cx from "classnames";
 import { Switch, Route, Redirect } from "react-router-dom";
+
+import { useSelector } from 'react-redux';
+import {
+  selectNavigation,  
+} from 'features/form/navigationSlice'
+
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -33,6 +39,10 @@ export default function Dashboard(props) {
   // const [hasImage, setHasImage] = React.useState(true);
   const [fixedClasses, setFixedClasses] = React.useState("dropdown");
   const [logo, setLogo] = React.useState(require("assets/img/logo-white.svg"));
+  
+  const userName = useSelector(selectNavigation).userName
+  const userType = useSelector(selectNavigation).userType
+  
   // styles
   const classes = useStyles();
   const mainPanelClasses =
@@ -92,9 +102,6 @@ export default function Dashboard(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const getRoute = () => {
-    return window.location.pathname !== "/admin/full-screen-maps";
-  };
   const getActiveRoute = routes => {
     let activeRoute = "7(a)ware";
     for (let i = 0; i < routes.length; i++) {
@@ -152,6 +159,8 @@ export default function Dashboard(props) {
         color={color}
         bgColor={bgColor}
         miniActive={miniActive}
+        userName={userName}
+        userType={userType}
         {...rest}
       />
       <div className={mainPanelClasses} ref={mainPanel}>
@@ -159,28 +168,19 @@ export default function Dashboard(props) {
           sidebarMinimize={sidebarMinimize.bind(this)}
           miniActive={miniActive}
           brandText={getActiveRoute(routes)}
-          handleDrawerToggle={handleDrawerToggle}
+          handleDrawerToggle={handleDrawerToggle}          
           {...rest}
         />
-        {/* On the /maps/full-screen-maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-        {getRoute() ? (
-          <div className={classes.content}>
+        
+        <div className={classes.content}>
             <div className={classes.container}>
               <Switch>
                 {getRoutes(routes)}
-                <Redirect from="/admin" to="/admin/dashboard" />
+                <Redirect from="/admin" to="/admin/borrower-dashboard" />
               </Switch>
             </div>
           </div>
-        ) : (
-          <div className={classes.map}>
-            <Switch>
-              {getRoutes(routes)}
-              <Redirect from="/admin" to="/admin/dashboard" />
-            </Switch>
-          </div>
-        )}
-        {getRoute() ? <Footer fluid /> : null}
+          <Footer fluid />
       </div>
     </div>
   );

@@ -54,14 +54,16 @@ var dashRoutes = [
     name: "Borrower Dashboard",
     icon: DashboardIcon,
     component: BorrowerDashboard,
-    layout: "/admin"
+    layout: "/admin",
+    invisible: true
   },
   {
     path: "/lender-dashboard",
     name: "Lender Dashboard",
     icon: Apps,
     component: LenderDashboard,
-    layout: "/admin"
+    layout: "/admin",
+    invisible: true
   },
   {
     path: "/dashboard",
@@ -69,7 +71,8 @@ var dashRoutes = [
     rtlName: "لوحة القيادة",
     icon: DashboardIcon,
     component: Dashboard,
-    layout: "/admin"
+    layout: "/admin",
+    invisible: true
   },
   {
     path: "/restricted",

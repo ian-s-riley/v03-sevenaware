@@ -7,7 +7,7 @@ import { updateUser as updateUserMutation } from '../../graphql/mutations';
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
-    id: "",
+    id: "70213c91-7f7a-4790-8146-cb26cb13daf8",
     userId: "",
     userType: "",    
     email: "",    
@@ -22,6 +22,7 @@ export const userSlice = createSlice({
     zip: "",
     zipPlus4: "",
     title: "",
+    profile: "",
     image: "",
     sevenAwareAgree: false,
   },
@@ -43,8 +44,8 @@ export const userSlice = createSlice({
       state.state = action.payload.state
       state.zip = action.payload.zip
       state.zipPlus4 = action.payload.zipPlus4
-      state.zipPlus4 = action.payload.zipPlus4
       state.title = action.payload.title
+      state.profile = action.payload.profile
       state.image = action.payload.image
       state.sevenAwareAgree = action.payload.sevenAwareAgree 
     },
@@ -78,6 +79,7 @@ export const updateUserAsync = user => dispatch => {
           zip: user.zip, 
           zipPlus4: user.zipPlus4,
           title: user.title,
+          profile: user.profile,
           image: user.image,
           sevenAwareAgree: user.sevenAwareAgree,
         }

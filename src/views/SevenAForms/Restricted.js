@@ -9,6 +9,9 @@ import {
   updateFormAsync,
   selectForm,
 } from 'features/form/formSlice'
+import {
+  selectNavigation,
+} from 'features/form/navigationSlice'
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -49,7 +52,8 @@ export default function Restricted() {
 
   const [isDirty, setIsDirty] = useState(false)
   const [form, setForm] = useState(useSelector(selectForm))
-  //console.log('useSelector(selectForm)', form)
+  const [navigation, setNavigation] = useState(useSelector(selectNavigation))
+  console.log('useSelector(selectNavigation)', navigation)
 
   function handleChange(id, value) {
     setForm({ ...form, [id]: value})

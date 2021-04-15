@@ -1,9 +1,10 @@
 /*eslint-disable*/
 import React from "react";
-import PropTypes from "prop-types";
-// javascript plugin used to create scrollbars on windows
-import PerfectScrollbar from "perfect-scrollbar";
 import { NavLink } from "react-router-dom";
+
+// javascript plugin used to create scrollbars on windows
+import PropTypes from "prop-types";
+import PerfectScrollbar from "perfect-scrollbar";
 import cx from "classnames";
 
 // @material-ui/core components
@@ -20,7 +21,7 @@ import Icon from "@material-ui/core/Icon";
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
 
 import sidebarStyle from "assets/jss/material-dashboard-pro-react/components/sidebarStyle.js";
-
+import DashboardIcon from "@material-ui/icons/Dashboard";
 import avatar from "assets/img/faces/avatar.jpg";
 
 var ps;
@@ -45,10 +46,11 @@ class SidebarWrapper extends React.Component {
     }
   }
   render() {
-    const { className, user, headerLinks, links } = this.props;
+    const { className, user, dashboard, headerLinks, links } = this.props;
     return (
       <div className={className} ref={this.sidebarWrapper}>
         {user}
+        {dashboard}
         {headerLinks}
         {links}
       </div>
@@ -296,6 +298,7 @@ class Sidebar extends React.Component {
       );
     });
   };
+
   render() {
     const {
       classes,
@@ -337,7 +340,8 @@ class Sidebar extends React.Component {
       classes.collapseItemMini
     const photo =
       classes.photo
-    var user = (
+    
+      var user = (
       <div className={userWrapperClass}>
         <div className={photo}>
           <img src={avatar} className={classes.avatarImg} alt="..." />
@@ -349,7 +353,29 @@ class Sidebar extends React.Component {
               className={classes.itemLink + " " + classes.userCollapseButton}
             >
               <ListItemText
-                primary="Ian Riley"                
+                primary={this.props.userName}               
+                disableTypography={true}
+                className={itemText + " " + classes.userItemText}
+              />
+            </NavLink>            
+          </ListItem>
+        </List>
+      </div>
+    );
+
+    var dashboard = (
+      <div className={userWrapperClass}>
+        <div className={photo}>
+          <DashboardIcon></DashboardIcon>
+        </div>
+        <List className={classes.list}>
+          <ListItem className={classes.item + " " + classes.userItem}>
+            <NavLink
+              to={this.props.userType === "Lender" ? "/admin/lender-dashboard" : "/admin/borrower-dashboard"}
+              className={classes.itemLink + " " + classes.userCollapseButton}
+            >
+              <ListItemText
+                primary="Dashboard"
                 disableTypography={true}
                 className={itemText + " " + classes.userItemText}
               />
@@ -438,6 +464,7 @@ class Sidebar extends React.Component {
             <SidebarWrapper
               className={sidebarWrapper}
               user={user}
+              dashboard={dashboard}
               headerLinks={<AdminNavbarLinks rtlActive={rtlActive} />}
               links={links}
             />
@@ -464,6 +491,7 @@ class Sidebar extends React.Component {
             <SidebarWrapper
               className={sidebarWrapper}
               user={user}
+              dashboard={dashboard}
               links={links}
             />
             {image !== undefined ? (
@@ -499,6 +527,8 @@ Sidebar.propTypes = {
   logo: PropTypes.string,
   logoText: PropTypes.string,
   image: PropTypes.string,
+  userName: PropTypes.string,
+  userType: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object),
   miniActive: PropTypes.bool,
   open: PropTypes.bool,

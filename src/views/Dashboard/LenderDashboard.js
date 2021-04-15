@@ -1,15 +1,20 @@
 import React, {useState, useEffect} from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 //AWS Amplify GraphQL libraries
 import { API, graphqlOperation } from 'aws-amplify';
-import { listForms } from '../../graphql/queries';
+import { listForms, getForm } from '../../graphql/queries';
 
 //redux store
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   selectForm,
+  updateForm,
 } from 'features/form/formSlice'
+import {
+  selectNavigation,
+  updateNavigation,
+} from 'features/form/navigationSlice'
 
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
@@ -42,7 +47,10 @@ import styles from "assets/jss/material-dashboard-pro-react/views/dashboardStyle
 const useStyles = makeStyles(styles);
 
 export default function LenderDashboard() {
+  const history = useHistory()  
+  const dispatch = useDispatch()
   const classes = useStyles();
+
   const colors = [
     "primary",
     "warning",
@@ -59,6 +67,8 @@ export default function LenderDashboard() {
 
   const [forms, setForms] = useState([])
   const [form, setForm] = useState(useSelector(selectForm))
+  const navigation = useSelector(selectNavigation)
+  //console.log('navigation', navigation)
   //console.log('form', form)
 
   useEffect(() => {
@@ -68,8 +78,22 @@ export default function LenderDashboard() {
   async function fetchForms() {
     const apiData = await API.graphql(graphqlOperation(listForms))
     const formsFromAPI = apiData.data.listForms.items 
-    console.log('fetchForms: apiData.data.listForms.items', apiData.data.listForms.items)
     setForms(formsFromAPI);    
+  }
+
+  async function gotoForm(newFormId) {
+    dispatch(updateNavigation({formId: newFormId}))
+
+    const formFromAPI = await API.graphql({ query: getForm, variables: { id: newFormId  }});    
+    const thisForm = formFromAPI.data.getForm                     
+    console.log('fetchForm: thisForm', thisForm) 
+
+    // //set the redux store
+    dispatch(updateNavigation({...navigation, formId: newFormId }))
+    dispatch(updateForm(thisForm))
+
+    //go to the application form page for this user
+    history.push("/admin/restricted")
   }
 
   const percentCompletedChart = {
@@ -98,12 +122,9 @@ export default function LenderDashboard() {
               <CardIcon color="info">
                 <Icon>content_copy</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>Loan Applications</p>
+              <p className={classes.cardCategory}>Hello, {navigation.userName}</p>
               <h3 className={classes.cardTitle}>
-              {forms.length}<small> active & in progress</small>
-              </h3>
-              <h3 className={classes.cardTitle}>
-              218<small> completed</small>
+              <small>You have </small>{forms.length}<small> loan applications in progress</small>
               </h3>
             </CardHeader>
           </Card>
@@ -112,7 +133,7 @@ export default function LenderDashboard() {
         <Card >
             <CardHeader>
             <h3 className={classes.cardTitle}>
-              Active Loan Applications & Borrowers
+              Active Applications & Borrowers
               </h3>
               <h4 className={classes.cardTitle}>
               Select an applciation to view progress & details.
@@ -127,6 +148,7 @@ export default function LenderDashboard() {
                         </GridItem>
                         <GridItem xs={12} sm={12} md={8} lg={10}>
                             <CustomLinearProgress
+                                onClick={() => gotoForm(form.id)}
                                 variant="determinate"
                                 color={colors[Math.floor(Math.random() * 10)]}
                                 value={form.percentComplete}

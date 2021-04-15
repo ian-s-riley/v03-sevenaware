@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import Button from "components/CustomButtons/Button.js";
 
 import defaultImage from "assets/img/image_placeholder.jpg";
-import defaultAvatar from "assets/img/placeholder.jpg";
+import defaultAvatar from "assets/img/faces/avatar.jpg";
 
 export default function ImageUpload(props) {
   const [file, setFile] = React.useState(null);
@@ -60,7 +60,7 @@ export default function ImageUpload(props) {
             </Button>
             {avatar ? <br /> : null}
             <Button {...removeButtonProps} onClick={() => handleRemove()}>
-              <i className="fas fa-times" /> Remove
+              Remove
             </Button>
           </span>
         )}

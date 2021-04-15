@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 //AWS Amplify GraphQL libraries
 import { API } from 'aws-amplify';
@@ -11,6 +11,9 @@ import {
   selectForm,
   updateForm
 } from 'features/form/formSlice'
+import {
+  selectNavigation
+} from 'features/form/navigationSlice'
 
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
@@ -41,6 +44,7 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import Timeline from "components/Timeline/Timeline.js";
+import FormLabel from "@material-ui/core/FormLabel";
 
 import { widgetStories } from "variables/general.js";
 import businessImage from "assets/img/desal1.jpg";
@@ -51,8 +55,7 @@ import { now } from "moment";
 const useStyles = makeStyles(styles);
 
 export default function BorrowerDashboard() {
-  const classes = useStyles();
-  const history = useHistory()  
+  const classes = useStyles();  
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -67,7 +70,7 @@ export default function BorrowerDashboard() {
   });
 
   //const [formId, setFormId] = useState("e104bf37-209c-4e92-b0b0-661503743244")
-  const [formId, setFormId] = useState("6191108e-729b-40c4-a262-202692bedaa4")
+  const [formId, setFormId] = useState(useSelector(selectNavigation).formId)
   const [form, setForm] = useState(useSelector(selectForm))
 
   useEffect(() => {
@@ -75,16 +78,17 @@ export default function BorrowerDashboard() {
   }, [formId])
 
   async function fetchForm() {
+    //console.log('fetchForm: formId', formId)   
     //get this user's form/application from the DB
     const formFromAPI = await API.graphql({ query: getForm, variables: { id: formId  }});    
     const thisForm = formFromAPI.data.getForm                     
+    //console.log('fetchForm: thisForm', thisForm) 
 
-    //set the redux store
+    // //set the redux store
     dispatch(updateForm(thisForm))
 
-    //set the local store
-    setForm(thisForm)  
-    console.log('fetchForm: thisForm', thisForm)    
+    // //set the local store
+    setForm(thisForm)         
   } 
 
   return (
@@ -115,7 +119,7 @@ export default function BorrowerDashboard() {
               </NavLink>              
             ) : (
               <NavLink
-                to={form.stageNavigate}
+                to={form.stageNavigate || "/admin/restricted"}
                 className={
                   classes.itemLink + " " + classes.userCollapseLinks
                 }

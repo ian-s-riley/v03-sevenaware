@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
 import { useHistory } from "react-router-dom";
 
-//AWS Amplify GraphQL libraries
-import { API } from 'aws-amplify';
+//AWS Amplify libraries
+import { API, Storage  } from 'aws-amplify';
 import { getUser } from '../../graphql/queries';
 
 // redux store
@@ -12,6 +12,10 @@ import {
   updateUserAsync,
   selectUser,
 } from 'features/form/userSlice'
+import {
+  selectNavigation,  
+  updateNavigation,
+} from 'features/form/navigationSlice'
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -36,11 +40,12 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import ImageUpload from "components/CustomUpload/ImageUpload.js";
+import FormLabel from "@material-ui/core/FormLabel";
 
 import styles from "assets/jss/material-dashboard-pro-react/views/userProfileStyles.js";
 
-import avatar from "assets/img/faces/avatar.jpg";
-
+const usStates =  ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
 const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
@@ -59,16 +64,15 @@ export default function UserProfile() {
     };
   });
 
-  const [userId, setUserId] = useState("70213c91-7f7a-4790-8146-cb26cb13daf8")
+  const [userId, setUserId] = useState(useSelector(selectNavigation).userId)  
   const [user, setUser] = useState(useSelector(selectUser))  
 
+  const [userImage, setUserImage] = useState()
   const [firstNameState, setFirstNameState] = useState("");
   const [lastNameState, setLastNameState] = useState("");
   const [addressState, setAddressState] = useState("");
   const [cityState, setCityState] = useState("");
-  const [zipState, setZipState] = useState("");
-  
-  const usStates =  ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
+  const [zipState, setZipState] = useState("");    
 
   useEffect(() => {
     fetchUser()     
@@ -83,8 +87,19 @@ export default function UserProfile() {
 
     //set the local store
     setUser(thisUser)  
-    console.log('fetchUser: thisUser', thisUser)    
+    //console.log('fetchUser: thisUser', thisUser)    
+
+    //get the profile photo
+    //fetchImage()
   }   
+
+  async function fetchImage() {
+    //console.log('fetchImage: image', user.image)
+    if (user.image) {
+      const image = await Storage.get(user.image);
+      setUserImage(image);      
+    }
+  }
 
   // function that verifies if a string has a given length or not
   const verifyLength = (value, length) => {
@@ -104,13 +119,26 @@ export default function UserProfile() {
     setUser({ ...user, "state": event.target.value})
   }
 
-  function saveProfile() {
-    dispatch(updateUserAsync(user))
-    
-    //go to the next form
-    history.push("/admin/borrower-dashboard")
+  async function onImageChange(e) {
+    if (!e.target.files[0]) return
+    const file = e.target.files[0];
+    setUser({ ...user, image: file.name });
+    await Storage.put(file.name, file);
   }
 
+  async function saveProfile() {
+    dispatch(updateUserAsync(user))
+    
+    if (user.image) {
+      const image = await Storage.get(user.image);
+      setUserImage(image)
+    }
+  }
+
+  function switchUser(newUserId, newFormId, newUserName, newUserType) {
+    setUserId(newUserId)
+    dispatch(updateNavigation({userId: newUserId, formId: newFormId, userName: newUserName, userType: newUserType}))
+  }
   
   return (
     <div>
@@ -162,7 +190,7 @@ export default function UserProfile() {
                 <CustomInput
                   success={lastNameState === "success"}
                   error={lastNameState === "error"}
-                  id="latsName"
+                  id="lastName"
                   labelText="Last Name"
                   formControlProps={{
                     fullWidth: true
@@ -353,7 +381,7 @@ export default function UserProfile() {
                         )
                     }}
                   />
-                </GridItem>
+                </GridItem>                
               </GridContainer>
               <Button 
                 onClick={() => saveProfile()}
@@ -368,13 +396,26 @@ export default function UserProfile() {
         </GridItem>
         <GridItem xs={12} sm={12} md={4}>
           <Card profile>
-            <CardAvatar profile>
-              <a href="#" onClick={e => e.preventDefault()}>
-                <img src={avatar} alt="..." />
-              </a>
-            </CardAvatar>
             <CardBody profile>
               <GridContainer>
+              
+              <GridItem xs={12} sm={12} md={12}>
+                <ImageUpload
+                  avatar
+                  addButtonProps={{
+                    color: "rose",
+                    simple: true
+                  }}
+                  changeButtonProps={{
+                    color: "rose",
+                    simple: true
+                  }}
+                  removeButtonProps={{
+                    color: "rose",
+                    simple: true
+                  }}
+                />
+              </GridItem>
               <GridItem xs={12} sm={12} md={12}>
               <CustomInput
                       id="title"
@@ -413,6 +454,18 @@ export default function UserProfile() {
             </CardBody>
           </Card>
         </GridItem>
+      </GridContainer>
+      <GridContainer>
+      <GridItem>
+        <FormLabel className={classes.labelLeftHorizontal}>
+          Switch User:
+          <br /><a href="#" onClick={() => switchUser("70213c91-7f7a-4790-8146-cb26cb13daf8", "e104bf37-209c-4e92-b0b0-661503743244", "Ian Riley", "Borrower")}>Ian Riley - Borrower</a>
+          <br /><a href="#" onClick={() => switchUser("f0abd9ae-b0d6-448c-a48c-1b483e4f3f5a", "6191108e-729b-40c4-a262-202692bedaa4", "Sam Samuels", "Borrower")}>Sam S. - Borrower</a>
+          <br /><a href="#" onClick={() => switchUser("1c9932fa-df3a-4026-aaaf-06e29e02cb21", "a9b71b61-c7a3-47f9-ae3a-6623e60f0a4d", "Jane Doe", "Borrower")}>Jane Doe - Borrower</a>
+          <br />
+          <br /><a href="#" onClick={() => switchUser("96e2c4aa-f2e2-4fde-b66e-7459a04d93f8", "-1", "Mike Bruckheimer", "Lender")}>Mike Bruckheimer - Lender</a>
+        </FormLabel>
+      </GridItem>
       </GridContainer>
     </div>
   );
