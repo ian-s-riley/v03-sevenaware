@@ -3,12 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 export const navigationSlice = createSlice({
   name: 'navigation',
   initialState: {
-    //userId: "70213c91-7f7a-4790-8146-cb26cb13daf8",
-    userId: "96e2c4aa-f2e2-4fde-b66e-7459a04d93f8",    
-    userName: "Mike B.", 
-    userType: "Lender",
-    //formId: "e104bf37-209c-4e92-b0b0-661503743244",    
-    formId: "",    
+    userId: "70213c91-7f7a-4790-8146-cb26cb13daf8",    
+    userName: "Ian R.", 
+    userType: "Borrower",
+    formId: "e104bf37-209c-4e92-b0b0-661503743244",    
+
+    //userName: "Mike B.", 
+    //userType: "Lender",
+    //userId: "96e2c4aa-f2e2-4fde-b66e-7459a04d93f8",    
+    //formId: "",    
   },
   reducers: {
     updateNavigation: (state, action) => {

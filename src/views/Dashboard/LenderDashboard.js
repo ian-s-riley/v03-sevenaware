@@ -3,7 +3,7 @@ import { NavLink, useHistory } from "react-router-dom";
 
 //AWS Amplify GraphQL libraries
 import { API, graphqlOperation } from 'aws-amplify';
-import { listForms, getForm } from '../../graphql/queries';
+import { listForms, getForm, listNotifications } from '../../graphql/queries';
 
 //redux store
 import { useSelector, useDispatch } from 'react-redux';
@@ -21,17 +21,16 @@ import ChartistGraph from "react-chartist";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import Tooltip from "@material-ui/core/Tooltip";
 import Icon from "@material-ui/core/Icon";
 
 // @material-ui/icons
-import Edit from "@material-ui/icons/Edit";
 import Place from "@material-ui/icons/Place";
+import DateRange from "@material-ui/icons/DateRange";
+import CardTravel from "@material-ui/icons/CardTravel";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
@@ -40,8 +39,7 @@ import CardFooter from "components/Card/CardFooter.js";
 import Timeline from "components/Timeline/Timeline.js";
 import CustomLinearProgress from "components/CustomLinearProgress/CustomLinearProgress.js";
 
-import { widgetStories } from "variables/general.js";
-
+import { now } from "moment";
 import styles from "assets/jss/material-dashboard-pro-react/views/dashboardStyle.js";
 
 const useStyles = makeStyles(styles);
@@ -65,9 +63,11 @@ export default function LenderDashboard() {
     "rose",
   ]
 
+  const [userId, setUserId] = useState(useSelector(selectNavigation).userId)  
   const [forms, setForms] = useState([])
   const [form, setForm] = useState(useSelector(selectForm))
   const navigation = useSelector(selectNavigation)
+  const [notifications, setNotifications] = useState([])
   //console.log('navigation', navigation)
   //console.log('form', form)
 
@@ -75,10 +75,24 @@ export default function LenderDashboard() {
     fetchForms();
   }, []);
 
+  useEffect(() => {
+    fetchNotifications()     
+  }, [userId])
+
   async function fetchForms() {
     const apiData = await API.graphql(graphqlOperation(listForms))
     const formsFromAPI = apiData.data.listForms.items 
     setForms(formsFromAPI);    
+  }
+
+  async function fetchNotifications() {
+    const apiData = await API.graphql(graphqlOperation(listNotifications, {
+      filter: { toUserId: { eq: userId }},
+    }))    
+
+    const notificationsFromAPI = apiData.data.listNotifications.items
+    console.log('fetchNotifications: notificationsFromAPI', notificationsFromAPI)
+    setNotifications(notificationsFromAPI)    
   }
 
   async function gotoForm(newFormId) {
@@ -118,10 +132,7 @@ export default function LenderDashboard() {
         <GridContainer>
         <GridItem xs={12} sm={12} md={12} lg={12}>
         <Card>
-            <CardHeader color="info" stats icon>
-              <CardIcon color="info">
-                <Icon>content_copy</Icon>
-              </CardIcon>
+            <CardHeader stats>
               <p className={classes.cardCategory}>Hello, {navigation.userName}</p>
               <h3 className={classes.cardTitle}>
               <small>You have </small>{forms.length}<small> loan applications in progress</small>
@@ -168,18 +179,46 @@ export default function LenderDashboard() {
         </GridContainer>          
         </GridItem>        
         <GridItem xs={12} sm={6} md={6} lg={4}>
+        <GridContainer>
+        <GridItem xs={12} sm={12} md={12} lg={12}>
           <Card>
-            <CardHeader color="danger" stats icon>
-              <CardIcon color="danger">
-                <Icon>info_outline</Icon>
-              </CardIcon>
+            <CardHeader stats>
               <p className={classes.cardCategory}>Notifications</p>
-              <h3 className={classes.cardTitle}>5</h3>
+              <h3 className={classes.cardTitle}>
+              <small>You have </small>{notifications.length}<small> unread notifications.</small>
+              </h3>
             </CardHeader>
-            <CardBody>
-            <Timeline simple stories={widgetStories} />
-            </CardBody>
+            <CardFooter stats>
+              <div className={classes.stats}>
+                <DateRange />                
+                Latest Notification {now().toString()}
+              </div>
+            </CardFooter>
           </Card>
+        </GridItem>
+        {notifications.length > 0 && (
+          <GridItem xs={12} sm={12} md={12} lg={12}>
+          <Card product className={classes.cardHover}>
+                <CardHeader image className={classes.cardHeaderHover}>
+                  <Timeline simple stories={
+                  notifications.map(notification => (
+                    {
+                      // First story
+                      inverted: true,
+                      badgeColor: notification.color,
+                      badgeIcon: CardTravel,
+                      title: notification.title,
+                      titleColor: notification.color,
+                      body: notification.body,
+                      footerTitle: notification.updatedAt,
+                    }
+                  ))
+                } />
+                </CardHeader>    
+              </Card>
+            </GridItem>
+          )}        
+          </GridContainer>
         </GridItem>
       </GridContainer>      
     </div>

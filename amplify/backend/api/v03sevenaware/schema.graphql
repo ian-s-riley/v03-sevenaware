@@ -52,8 +52,11 @@ type Notification @model {
   id: ID!
   fromUserId: String!
   toUserId: String!
-  title: String
-  message: String
   action: String
   status: String
+  color: String
+  badgeIcon: String
+  title: String
+  body: String
+  footerTitle: String
 }

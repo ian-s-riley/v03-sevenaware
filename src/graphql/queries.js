@@ -141,10 +141,13 @@ export const getNotification = /* GraphQL */ `
       id
       fromUserId
       toUserId
-      title
-      message
       action
       status
+      color
+      badgeIcon
+      title
+      body
+      footerTitle
       createdAt
       updatedAt
     }
@@ -161,10 +164,13 @@ export const listNotifications = /* GraphQL */ `
         id
         fromUserId
         toUserId
-        title
-        message
         action
         status
+        color
+        badgeIcon
+        title
+        body
+        footerTitle
         createdAt
         updatedAt
       }

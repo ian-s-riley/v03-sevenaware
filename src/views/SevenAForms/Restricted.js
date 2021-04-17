@@ -64,7 +64,7 @@ export default function Restricted() {
     //a selection is required
     if (form.restricted === null) return false;    
     //update the form    
-    if (isDirty) {
+    if (isDirty && navigation.userType === "Borrower") {
       const thisForm = { 
         ...form, 
         percentComplete: 10,
@@ -73,9 +73,8 @@ export default function Restricted() {
         stageText: "Next, we'll need to know your profit structure for SBA loans.", 
         stageNavigate: "/admin/forprofit"
       }
-
-      //console.log('nextClick: thisForm', thisForm)    
-      dispatch(updateFormAsync(thisForm))
+      console.log('nextClick: thisForm', thisForm)  
+      dispatch(updateFormAsync(thisForm))              
     }    
 
     //go to the next form

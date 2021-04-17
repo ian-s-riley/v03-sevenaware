@@ -2,8 +2,8 @@ import React, {useState, useEffect} from "react";
 import { NavLink } from "react-router-dom";
 
 //AWS Amplify GraphQL libraries
-import { API } from 'aws-amplify';
-import { getForm } from '../../graphql/queries';
+import { API, graphqlOperation } from 'aws-amplify';
+import { getForm, listNotifications } from '../../graphql/queries';
 
 //redux store
 import { useSelector, useDispatch } from 'react-redux';
@@ -26,13 +26,16 @@ import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import Store from "@material-ui/icons/Store";
 import DateRange from "@material-ui/icons/DateRange";
-import LocalOffer from "@material-ui/icons/LocalOffer";
+import CardTravel from "@material-ui/icons/CardTravel";
 import Refresh from "@material-ui/icons/Refresh";
 import Edit from "@material-ui/icons/Edit";
 import Place from "@material-ui/icons/Place";
-import Warning from "@material-ui/icons/Warning";
 import ArtTrack from "@material-ui/icons/ArtTrack";
 import Money from "@material-ui/icons/MonetizationOn";
+import Extension from "@material-ui/icons/Extension";
+import Fingerprint from "@material-ui/icons/Fingerprint";
+import FlightLand from "@material-ui/icons/FlightLand";
+import Build from "@material-ui/icons/Build";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
@@ -44,13 +47,59 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import Timeline from "components/Timeline/Timeline.js";
-import FormLabel from "@material-ui/core/FormLabel";
 
-import { widgetStories } from "variables/general.js";
 import businessImage from "assets/img/desal1.jpg";
-
 import styles from "assets/jss/material-dashboard-pro-react/views/dashboardStyle.js";
 import { now } from "moment";
+
+const widgetStories = [
+  {
+    // First story
+    inverted: true,
+    badgeColor: "danger",
+    badgeIcon: CardTravel,
+    title: "From your lender",
+    titleColor: "danger",
+    body: (
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </p>
+    ),
+    footerTitle: "11 hours ago"
+  },
+  {
+    // Second story
+    inverted: true,
+    badgeColor: "success",
+    badgeIcon: Extension,
+    title: "Eligibility Completed",
+    titleColor: "success",
+    body: (
+      <p>
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      </p>
+    ),
+    footerTitle: "2 days ago"
+  },
+  {
+    // Third story
+    inverted: true,
+    badgeColor: "success",
+    badgeIcon: Fingerprint,
+    title: "Welcome to 7(a)ware",
+    titleColor: "success",
+    body: (
+      <div>
+        <p>
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+        </p>
+        <p>
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </div>
+    ),
+  }
+];
 
 const useStyles = makeStyles(styles);
 
@@ -69,13 +118,18 @@ export default function BorrowerDashboard() {
     };
   });
 
-  //const [formId, setFormId] = useState("e104bf37-209c-4e92-b0b0-661503743244")
+  const [userId, setUserId] = useState(useSelector(selectNavigation).userId)  
   const [formId, setFormId] = useState(useSelector(selectNavigation).formId)
   const [form, setForm] = useState(useSelector(selectForm))
+  const [notifications, setNotifications] = useState([])
 
   useEffect(() => {
     fetchForm()     
   }, [formId])
+
+  useEffect(() => {
+    fetchNotifications()     
+  }, [userId])
 
   async function fetchForm() {
     //console.log('fetchForm: formId', formId)   
@@ -91,6 +145,16 @@ export default function BorrowerDashboard() {
     setForm(thisForm)         
   } 
 
+  async function fetchNotifications() {
+    const apiData = await API.graphql(graphqlOperation(listNotifications, {
+      filter: { toUserId: { eq: userId }},
+    }))    
+
+    const notificationsFromAPI = apiData.data.listNotifications.items
+    //console.log('fetchNotifications: notificationsFromAPI', notificationsFromAPI)
+    setNotifications(notificationsFromAPI)    
+  }
+
   return (
     <div>
       <GridContainer>
@@ -98,10 +162,7 @@ export default function BorrowerDashboard() {
         <GridContainer>
         <GridItem xs={12} sm={12} md={12} lg={12}>
         <Card>
-            <CardHeader color="warning" stats icon>
-              <CardIcon color="warning">
-                <Icon>content_copy</Icon>
-              </CardIcon>
+            <CardHeader stats>
               <p className={classes.cardCategory}>{form.stage}</p>
               <h3 className={classes.cardTitle}>
               {form.percentComplete}% <small> completed</small>
@@ -212,8 +273,6 @@ export default function BorrowerDashboard() {
               </div>
             </CardFooter>
           </Card>
-
-        
         </GridItem>
         </GridContainer>          
         </GridItem>
@@ -221,10 +280,7 @@ export default function BorrowerDashboard() {
         <GridContainer>
         <GridItem xs={12} sm={12} md={12} lg={12}>
           <Card>
-            <CardHeader color="success" stats icon>
-              <CardIcon color="success">
-                <Store />
-              </CardIcon>
+            <CardHeader stats>
               <p className={classes.cardCategory}>Business & Loan Profile</p>
               <h3 className={classes.cardTitle}>{form.loanAmount || "Up to $3,500,000.00"}</h3>
             </CardHeader>
@@ -235,8 +291,8 @@ export default function BorrowerDashboard() {
               </div>
             </CardFooter>
           </Card>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={12} lg={12}>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={12} lg={12}>
             <Card product className={classes.cardHover}>
               <CardHeader image className={classes.cardHeaderHover}>
                   <img src={businessImage} alt="..." />
@@ -292,21 +348,49 @@ export default function BorrowerDashboard() {
                 </CardFooter>           
             </Card>
           </GridItem>
-          </GridContainer>
-        </GridItem>
-        <GridItem xs={12} sm={6} md={6} lg={4}>
+        </GridContainer>
+      </GridItem>
+      <GridItem xs={12} sm={6} md={6} lg={4}>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12} lg={12}>
           <Card>
-            <CardHeader color="danger" stats icon>
-              <CardIcon color="danger">
-                <Icon>info_outline</Icon>
-              </CardIcon>
+            <CardHeader stats>
               <p className={classes.cardCategory}>Notifications</p>
-              <h3 className={classes.cardTitle}>5</h3>
+              <h3 className={classes.cardTitle}>
+              <small>You have </small>{notifications.length}<small> unread notifications.</small>
+              </h3>
             </CardHeader>
-            <CardBody>
-            <Timeline simple stories={widgetStories} />
-            </CardBody>
+            <CardFooter stats>
+              <div className={classes.stats}>
+                <DateRange />                
+                Latest Notification {now().toString()}
+              </div>
+            </CardFooter>
           </Card>
+        </GridItem>
+        {notifications.length > 0 && (
+          <GridItem xs={12} sm={12} md={12} lg={12}>
+        <Card product className={classes.cardHover}>
+              <CardHeader image className={classes.cardHeaderHover}>
+                <Timeline simple stories={
+                notifications.map(notification => (
+                  {
+                    // First story
+                    inverted: true,
+                    badgeColor: notification.color,
+                    badgeIcon: CardTravel,
+                    title: notification.title,
+                    titleColor: notification.color,
+                    body: notification.body,
+                    footerTitle: notification.updatedAt,
+                  }
+                ))
+              } />
+              </CardHeader>    
+            </Card>
+          </GridItem>
+        )}        
+        </GridContainer>
         </GridItem>
       </GridContainer>      
     </div>

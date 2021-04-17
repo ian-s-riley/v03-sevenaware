@@ -208,10 +208,13 @@ export const createNotification = /* GraphQL */ `
       id
       fromUserId
       toUserId
-      title
-      message
       action
       status
+      color
+      badgeIcon
+      title
+      body
+      footerTitle
       createdAt
       updatedAt
     }
@@ -226,10 +229,13 @@ export const updateNotification = /* GraphQL */ `
       id
       fromUserId
       toUserId
-      title
-      message
       action
       status
+      color
+      badgeIcon
+      title
+      body
+      footerTitle
       createdAt
       updatedAt
     }
@@ -244,10 +250,13 @@ export const deleteNotification = /* GraphQL */ `
       id
       fromUserId
       toUserId
-      title
-      message
       action
       status
+      color
+      badgeIcon
+      title
+      body
+      footerTitle
       createdAt
       updatedAt
     }
