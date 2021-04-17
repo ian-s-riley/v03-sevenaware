@@ -70,7 +70,7 @@ var dashRoutes = [
     name: "Dashboard",
     rtlName: "لوحة القيادة",
     icon: DashboardIcon,
-    component: Dashboard,
+    component: BorrowerDashboard,
     layout: "/admin",
     invisible: true
   },

@@ -8,6 +8,9 @@ import {
   updateFormAsync,
   selectForm,
 } from 'features/form/formSlice'
+import {
+  selectNavigation,
+} from 'features/form/navigationSlice'
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -47,6 +50,7 @@ export default function AgreeLexisNexis() {
   const dispatch = useDispatch()
 
   const [form, setForm] = useState(useSelector(selectForm))
+  const [navigation, setNavigation] = useState(useSelector(selectNavigation))
   const [isDirty, setIsDirty] = useState(false)
 
   function handleAgree() {    
@@ -61,7 +65,7 @@ export default function AgreeLexisNexis() {
     //a selection is required
     if (form.agreeLexisNexis !== true) return false;  
     
-    if (isDirty) {
+    if (isDirty && navigation.userType === "Borrower") {
       //update the form    
       const thisForm = { 
         ...form, 

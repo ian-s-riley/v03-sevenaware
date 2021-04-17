@@ -8,6 +8,9 @@ import {
   updateFormAsync,
   selectForm,
 } from 'features/form/formSlice'
+import {
+  selectNavigation,
+} from 'features/form/navigationSlice'
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -49,6 +52,7 @@ export default function ForProfit() {
 
   const [isDirty, setIsDirty] = useState(false)
   const [form, setForm] = useState(useSelector(selectForm))
+  const [navigation, setNavigation] = useState(useSelector(selectNavigation))
 
   function handleChange(id, value) {
     setForm({ ...form, [id]: value})
@@ -60,7 +64,7 @@ export default function ForProfit() {
     //a selection is required
     if (form.forProfit === null) return false;    
     //update the form    
-    if (isDirty) {
+    if (isDirty && navigation.userType === "Borrower") {
       const thisForm = { 
         ...form, 
         percentComplete: 20,
@@ -69,8 +73,8 @@ export default function ForProfit() {
         stageText: "Let's start with your business name.", 
         stageNavigate: "/admin/business-profile"
       }
-      dispatch(updateFormAsync(thisForm))
-    }    
+      dispatch(updateFormAsync(thisForm))             
+    }  
 
     //go to the next form
     form.forProfit 

@@ -53,7 +53,7 @@ export default function Restricted() {
   const [isDirty, setIsDirty] = useState(false)
   const [form, setForm] = useState(useSelector(selectForm))
   const [navigation, setNavigation] = useState(useSelector(selectNavigation))
-  console.log('useSelector(selectNavigation)', navigation)
+  //console.log('useSelector(selectNavigation)', navigation)
 
   function handleChange(id, value) {
     setForm({ ...form, [id]: value})
