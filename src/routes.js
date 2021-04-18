@@ -37,6 +37,8 @@ import ForProfitNo from "views/SevenAForms/ForProfitNo";
 import BusinessProfile from "views/SevenAForms/BusinessProfile";
 import BusinessAddress from "views/SevenAForms/BusinessAddress";
 import AgreeLexisNexis from "views/SevenAForms/AgreeLexisNexis";
+import Owner from "views/SevenAForms/Owner";
+import Owners from "views/SevenAForms/Owners";
 
 // @material-ui/icons
 import Apps from "@material-ui/icons/Apps";
@@ -127,6 +129,22 @@ var dashRoutes = [
     name: "Business Profile > Verification",
     mini: "P",
     component: AgreeLexisNexis,
+    layout: "/admin",
+    invisible: true
+  }, 
+  {
+    path: "/owner",
+    name: "Business Profile > Ownership",
+    mini: "O",
+    component: Owner,
+    layout: "/admin",
+    invisible: true
+  },  
+  {
+    path: "/owners",
+    name: "Business Profile > Multiple Owners",
+    mini: "O",
+    component: Owners,
     layout: "/admin",
     invisible: true
   },  

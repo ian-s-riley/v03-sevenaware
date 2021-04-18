@@ -48,11 +48,14 @@ const useStyles = makeStyles(styles);
 export default function BusinessProfile() {
   const history = useHistory()
   const dispatch = useDispatch()
-  
+
+  const formPercentage = 15  
+  console.log('formPercentage', formPercentage)
   const [form, setForm] = useState(useSelector(selectForm))
   const [navigation, setNavigation] = useState(useSelector(selectNavigation))
+  console.log('form.percentComplete', form.percentComplete)
+  const [isDirty, setIsDirty] = useState(form.percentComplete < formPercentage ? true : false)
 
-  const [isDirty, setIsDirty] = useState(false)
   const [idType, setIdType] = useState("fein")
   const [numberState, setnumberState] = React.useState("");
   const [requiredState, setrequiredState] = React.useState("");
@@ -99,7 +102,7 @@ export default function BusinessProfile() {
       //update the form    
       const thisForm = { 
         ...form, 
-        percentComplete: 30,
+        percentComplete: formPercentage,
         stage: "Profile > Address",
         stageHeader: "Business Address",
         stageText: "We'll need to know where your business is located.", 
@@ -139,6 +142,7 @@ export default function BusinessProfile() {
                       fullWidth: true
                     }}
                     inputProps={{
+                      disabled: navigation.userType === "Borrower" ? false : true,
                       value: form.businessName || "",
                       onChange: event => {
                         if (verifyLength(event.target.value, 1)) {
@@ -168,6 +172,7 @@ export default function BusinessProfile() {
                       fullWidth: true
                     }}
                     inputProps={{  
+                      disabled: navigation.userType === "Borrower" ? false : true,
                       value: form.dba || "",
                       onChange: event => {
                         handleChange(event)
@@ -187,7 +192,8 @@ export default function BusinessProfile() {
                 formControlProps={{
                     fullWidth: true
                 }}
-                inputProps={{                    
+                inputProps={{     
+                    disabled: navigation.userType === "Borrower" ? false : true,               
                     value: form.fein || "",
                     onChange: event => {
                     if (verifyNumber(event.target.value)) {
@@ -221,6 +227,7 @@ export default function BusinessProfile() {
                     fullWidth: true
                 }}
                 inputProps={{
+                    disabled: navigation.userType === "Borrower" ? false : true,
                     value: form.tin || "",
                     onChange: event => {
                     if (verifyNumber(event.target.value)) {
@@ -254,60 +261,61 @@ export default function BusinessProfile() {
                     fullWidth: true
                 }}
                 inputProps={{
-                    value: form.ssn || "",
-                    onChange: event => {
-                    if (verifyNumber(event.target.value)) {
-                        setnumberState("success");
-                    } else {
-                        setnumberState("error");
-                    }
-                    handleChange(event)
-                    },  
-                    maxLength: 9,                  
-                    endAdornment:
-                    numberState === "error" ? (
-                        <InputAdornment position="end">
-                        <Close className={classes.danger} />
-                        </InputAdornment>
-                    ) : (
-                        undefined
-                    )
+                  disabled: navigation.userType === "Borrower" ? false : true,
+                  value: form.ssn || "",
+                  onChange: event => {
+                  if (verifyNumber(event.target.value)) {
+                      setnumberState("success");
+                  } else {
+                      setnumberState("error");
+                  }
+                  handleChange(event)
+                  },  
+                  maxLength: 9,                  
+                  endAdornment:
+                  numberState === "error" ? (
+                      <InputAdornment position="end">
+                      <Close className={classes.danger} />
+                      </InputAdornment>
+                  ) : (
+                      undefined
+                  )
                 }}
                 />
             </GridItem>
-            }            
+            }   
+            {navigation.userType === "Borrower" && (
             <GridItem xs={12} sm={8}>
-                {idType == "fein" && 
-                <FormLabel className={classes.labelLeftHorizontal}>
-                  Don't have a FEIN? Enter your <a href="#" onClick={() => handleSetIdType("tin")}>TIN</a> or <a href="#" onClick={() => handleSetIdType("ssn")}> SSN</a>.
-                </FormLabel>
-                }           
-                {idType == "tin" && 
-                <FormLabel className={classes.labelLeftHorizontal}>
-                  Don't have a TIN? Enter your <a href="#" onClick={() => handleSetIdType("ssn")}> SSN</a> or <a href="#" onClick={() => handleSetIdType("fein")}> FEIN</a>.
-                </FormLabel>
-                }               
-                {idType == "ssn" && 
-                <FormLabel className={classes.labelLeftHorizontal}>
-                  Don't have a SSN? Enter your <a href="#" onClick={() => handleSetIdType("fein")}> FEIN</a> or <a href="#" onClick={() => handleSetIdType("tin")}> TIN</a>.
-                </FormLabel>
-                }            
-              </GridItem>
-              <GridItem xs={12} sm={8}><br /><br /></GridItem>              
-            </GridContainer>
+              {idType == "fein" && 
+              <FormLabel className={classes.labelLeftHorizontal}>
+                Don't have a FEIN? Enter your <a href="#" onClick={() => handleSetIdType("tin")}>TIN</a> or <a href="#" onClick={() => handleSetIdType("ssn")}> SSN</a>.
+              </FormLabel>
+              }           
+              {idType == "tin" && 
+              <FormLabel className={classes.labelLeftHorizontal}>
+                Don't have a TIN? Enter your <a href="#" onClick={() => handleSetIdType("ssn")}> SSN</a> or <a href="#" onClick={() => handleSetIdType("fein")}> FEIN</a>.
+              </FormLabel>
+              }               
+              {idType == "ssn" && 
+              <FormLabel className={classes.labelLeftHorizontal}>
+                Don't have a SSN? Enter your <a href="#" onClick={() => handleSetIdType("fein")}> FEIN</a> or <a href="#" onClick={() => handleSetIdType("tin")}> TIN</a>.
+              </FormLabel>
+              }            
+            </GridItem>
+            )}         
+            <GridItem xs={12} sm={8}><br /><br /></GridItem>              
+          </GridContainer>
 
-            <Button
-                onClick={() => history.goBack()}
-              >
-                Previous
-              </Button>
-            <Button
-                color="info"
-                onClick={nextClick}
-                className={classes.registerButton}
-              >
-                Next
-              </Button>
+          <Button onClick={() => history.goBack()}>
+            Previous
+          </Button>
+          <Button
+            color="info"
+            onClick={nextClick}
+            className={classes.registerButton}
+          >
+            Next
+          </Button>
           </form>
             
           </CardBody>

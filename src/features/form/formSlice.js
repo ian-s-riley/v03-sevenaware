@@ -31,6 +31,7 @@ export const formSlice = createSlice({
     businessZip: "",
     businessZipPlus4: "",
     agreeLexisNexis: false,
+    fullOwner: null,
   },
   reducers: {
     updateForm: (state, action) => {
@@ -56,6 +57,7 @@ export const formSlice = createSlice({
       state.businessZip = action.payload.businessZip
       state.businessZipPlus4 = action.payload.businessZipPlus4
       state.agreeLexisNexis = action.payload.agreeLexisNexis   
+      state.fullOwner = action.payload.fullOwner
     },
   },
 });
@@ -93,6 +95,7 @@ export const updateFormAsync = form => dispatch => {
           businessZip: form.businessZip,
           businessZipPlus4: form.businessZipPlus4,
           agreeLexisNexis: form.agreeLexisNexis,
+          fullOwner: form.fullOwner,
         }
       } 
   })    

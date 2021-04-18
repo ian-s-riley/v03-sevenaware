@@ -24,6 +24,11 @@ export const createUser = /* GraphQL */ `
       title
       profile
       image
+      fein
+      tin
+      ssn
+      idType
+      percentOwner
       sevenAwareAgree
       createdAt
       updatedAt
@@ -53,6 +58,11 @@ export const updateUser = /* GraphQL */ `
       title
       profile
       image
+      fein
+      tin
+      ssn
+      idType
+      percentOwner
       sevenAwareAgree
       createdAt
       updatedAt
@@ -82,6 +92,11 @@ export const deleteUser = /* GraphQL */ `
       title
       profile
       image
+      fein
+      tin
+      ssn
+      idType
+      percentOwner
       sevenAwareAgree
       createdAt
       updatedAt
@@ -120,6 +135,7 @@ export const createForm = /* GraphQL */ `
       businessZip
       businessZipPlus4
       agreeLexisNexis
+      fullOwner
       createdAt
       updatedAt
     }
@@ -157,6 +173,7 @@ export const updateForm = /* GraphQL */ `
       businessZip
       businessZipPlus4
       agreeLexisNexis
+      fullOwner
       createdAt
       updatedAt
     }
@@ -194,6 +211,7 @@ export const deleteForm = /* GraphQL */ `
       businessZip
       businessZipPlus4
       agreeLexisNexis
+      fullOwner
       createdAt
       updatedAt
     }

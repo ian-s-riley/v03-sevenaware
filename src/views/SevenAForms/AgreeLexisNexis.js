@@ -48,10 +48,13 @@ const useStyles = makeStyles(styles);
 export default function AgreeLexisNexis() {
   const history = useHistory()
   const dispatch = useDispatch()
-
+  
+  const formPercentage = 25
+  console.log('formPercentage', formPercentage)
   const [form, setForm] = useState(useSelector(selectForm))
   const [navigation, setNavigation] = useState(useSelector(selectNavigation))
-  const [isDirty, setIsDirty] = useState(false)
+  console.log('form.percentComplete', form.percentComplete)
+  const [isDirty, setIsDirty] = useState(form.percentComplete < formPercentage ? true : false)
 
   function handleAgree() {    
     const agree = !form.agreeLexisNexis
@@ -69,17 +72,17 @@ export default function AgreeLexisNexis() {
       //update the form    
       const thisForm = { 
         ...form, 
-        percentComplete: 50,
-        stage: "Ownership",
-        stageHeader: "Businss Ownership",
-        stageText: "The SBA needs to know who owns this business.", 
-        stageNavigate: "/admin/dashboard"
+        percentComplete: formPercentage,
+        stage: "Business Profile > Ownership",
+        stageHeader: "Who owns this business?",
+        stageText: "We'll need to know some details about the ownership structure of your company.", 
+        stageNavigate: "/admin/owner"
       }
       dispatch(updateFormAsync(thisForm))
     }
     
     //go to the next form
-    history.push("/admin/")
+    history.push("/admin/owner")
   };
   
   const classes = useStyles();
@@ -117,6 +120,7 @@ export default function AgreeLexisNexis() {
                   control={
                     <Checkbox
                       tabIndex={-1}
+                      disabled={navigation.userType === "Borrower" ? false : true}
                       onClick={() => handleAgree()}
                       checked={form.agreeLexisNexis || false}
                       checkedIcon={<Check className={classes.checkedIcon} />}
@@ -145,6 +149,7 @@ export default function AgreeLexisNexis() {
                 Previous
               </Button>
             <Button
+                disabled={!form.agreeLexisNexis}
                 color="info"
                 onClick={nextClick}
                 className={classes.registerButton}

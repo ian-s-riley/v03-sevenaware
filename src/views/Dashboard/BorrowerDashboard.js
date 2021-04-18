@@ -51,56 +51,6 @@ import Timeline from "components/Timeline/Timeline.js";
 import businessImage from "assets/img/desal1.jpg";
 import styles from "assets/jss/material-dashboard-pro-react/views/dashboardStyle.js";
 import { now } from "moment";
-
-const widgetStories = [
-  {
-    // First story
-    inverted: true,
-    badgeColor: "danger",
-    badgeIcon: CardTravel,
-    title: "From your lender",
-    titleColor: "danger",
-    body: (
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </p>
-    ),
-    footerTitle: "11 hours ago"
-  },
-  {
-    // Second story
-    inverted: true,
-    badgeColor: "success",
-    badgeIcon: Extension,
-    title: "Eligibility Completed",
-    titleColor: "success",
-    body: (
-      <p>
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      </p>
-    ),
-    footerTitle: "2 days ago"
-  },
-  {
-    // Third story
-    inverted: true,
-    badgeColor: "success",
-    badgeIcon: Fingerprint,
-    title: "Welcome to 7(a)ware",
-    titleColor: "success",
-    body: (
-      <div>
-        <p>
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-        </p>
-        <p>
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-      </div>
-    ),
-  }
-];
-
 const useStyles = makeStyles(styles);
 
 export default function BorrowerDashboard() {
@@ -136,7 +86,7 @@ export default function BorrowerDashboard() {
     //get this user's form/application from the DB
     const formFromAPI = await API.graphql({ query: getForm, variables: { id: formId  }});    
     const thisForm = formFromAPI.data.getForm                     
-    //console.log('fetchForm: thisForm', thisForm) 
+    console.log('fetchForm: thisForm', thisForm) 
 
     // //set the redux store
     dispatch(updateForm(thisForm))

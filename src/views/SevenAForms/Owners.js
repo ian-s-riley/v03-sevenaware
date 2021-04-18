@@ -42,15 +42,14 @@ import Table from "components/Table/Table.js";
 
 // style for this view
 import styles from "assets/jss/material-dashboard-pro-react/views/validationFormsStyle.js";
-import { isFunctionOrConstructorTypeNode } from "typescript";
 
 const useStyles = makeStyles(styles);
 
-export default function ForProfit() {
+export default function Owners() {
   const history = useHistory()
   const dispatch = useDispatch()
-  
-  const formPercentage = 10
+
+  const formPercentage = 30
   console.log('formPercentage', formPercentage)
   const [form, setForm] = useState(useSelector(selectForm))
   const [navigation, setNavigation] = useState(useSelector(selectNavigation))
@@ -65,27 +64,26 @@ export default function ForProfit() {
   const nextClick = () => {
     //console.log('nextClick: form', form)    
     //a selection is required
-    if (form.forProfit === null) return false;    
+    if (form.fullOwner === null) return false;    
     //update the form    
     if (isDirty && navigation.userType === "Borrower") {
       const thisForm = { 
         ...form, 
-        percentComplete: formPercentage,
-        stage: "Profile > Business",
-        stageHeader: "Create Business Profile",
-        stageText: "Let's start with your business name.", 
-        stageNavigate: "/admin/business-profile"
+        percentComplete: 55,
+        stage: "Business Profile > Ownership",
+        stageHeader: "Who owns this business?",
+        stageText: "We'll need to know some details about the ownership structure of your business.", 
+        stageNavigate: "/admin/owners"
       }
-      //console.log('nextClick: thisForm', thisForm)  
       dispatch(updateFormAsync(thisForm))             
     }  
 
     //go to the next form
-    form.forProfit 
+    form.fullOwner 
     ? 
-    history.push("/admin/business-profile")    
+    navigation.userType === "Lender" ? history.push("/admin/lender-dashboard") : history.push("/admin/borrower-dashboard")    
     :
-    history.push("/admin/forprofit-no")    
+    history.push("/admin/owners")    
   };
   
   const classes = useStyles();
@@ -99,7 +97,7 @@ export default function ForProfit() {
               <Warning />
             </CardIcon>
             <h4 className={classes.cardIconTitle}>
-            Is your business a for profit entity?
+            Do you own 100% or your business?
             </h4>
           </CardHeader>
           <CardBody>
@@ -107,14 +105,12 @@ export default function ForProfit() {
           <GridContainer justify="center">
               <GridItem xs={12} sm={12} className={classes.center}>
                 <Button
-                  disabled={navigation.userType === "Borrower" ? false : true}
-                  color={form.forProfit ? "success" : null}
-                  onClick={() => handleChange("forProfit", true)}
+                  color={form.fullOwner ? "success" : null}
+                  onClick={() => handleChange("fullOwner", true)}
                   >Yes</Button>
                 <Button 
-                  disabled={navigation.userType === "Borrower" ? false : true}
-                  onClick={() => handleChange("forProfit", false)}
-                  color={form.forProfit === false ? "danger" : null}
+                  onClick={() => handleChange("fullOwner", false)}
+                  color={form.fullOwner === false ? "danger" : null}
                 >No</Button>
               </GridItem>
             </GridContainer>

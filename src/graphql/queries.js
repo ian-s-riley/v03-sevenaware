@@ -21,6 +21,11 @@ export const getUser = /* GraphQL */ `
       title
       profile
       image
+      fein
+      tin
+      ssn
+      idType
+      percentOwner
       sevenAwareAgree
       createdAt
       updatedAt
@@ -52,6 +57,11 @@ export const listUsers = /* GraphQL */ `
         title
         profile
         image
+        fein
+        tin
+        ssn
+        idType
+        percentOwner
         sevenAwareAgree
         createdAt
         updatedAt
@@ -89,6 +99,7 @@ export const getForm = /* GraphQL */ `
       businessZip
       businessZipPlus4
       agreeLexisNexis
+      fullOwner
       createdAt
       updatedAt
     }
@@ -128,6 +139,7 @@ export const listForms = /* GraphQL */ `
         businessZip
         businessZipPlus4
         agreeLexisNexis
+        fullOwner
         createdAt
         updatedAt
       }

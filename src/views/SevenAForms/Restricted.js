@@ -43,17 +43,20 @@ import Table from "components/Table/Table.js";
 
 // style for this view
 import styles from "assets/jss/material-dashboard-pro-react/views/validationFormsStyle.js";
+import { BottomNavigationAction } from "@material-ui/core";
 
 const useStyles = makeStyles(styles);
 
 export default function Restricted() {
   const history = useHistory()
   const dispatch = useDispatch()
-
-  const [isDirty, setIsDirty] = useState(false)
+  
+  const formPercentage = 5
+  console.log('formPercentage', formPercentage)
   const [form, setForm] = useState(useSelector(selectForm))
   const [navigation, setNavigation] = useState(useSelector(selectNavigation))
-  //console.log('useSelector(selectNavigation)', navigation)
+  console.log('form.percentComplete', form.percentComplete)
+  const [isDirty, setIsDirty] = useState(form.percentComplete < formPercentage ? true : false)
 
   function handleChange(id, value) {
     setForm({ ...form, [id]: value})
@@ -67,13 +70,13 @@ export default function Restricted() {
     if (isDirty && navigation.userType === "Borrower") {
       const thisForm = { 
         ...form, 
-        percentComplete: 10,
+        percentComplete: formPercentage,
         stage: "Eligibility > ForProfit",
         stageHeader: "Verify Eligibility",
         stageText: "Next, we'll need to know your profit structure for SBA loans.", 
         stageNavigate: "/admin/forprofit"
       }
-      console.log('nextClick: thisForm', thisForm)  
+      //console.log('nextClick: thisForm', thisForm)  
       dispatch(updateFormAsync(thisForm))              
     }    
 
@@ -118,10 +121,12 @@ export default function Restricted() {
               </GridItem>
               <GridItem xs={12} sm={12} className={classes.center}>
                 <Button
+                  disabled={navigation.userType === "Borrower" ? false : true}
                   color={form.restricted ? "danger" : null}
                   onClick={() => handleChange("restricted", true)}
                   >Yes</Button>
                 <Button 
+                  disabled={navigation.userType === "Borrower" ? false : true}
                   onClick={() => handleChange("restricted", false)}
                   color={form.restricted === false ? "success" : null}
                 >No</Button>

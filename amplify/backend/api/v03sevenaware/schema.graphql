@@ -16,6 +16,11 @@ type User @model {
   title: String
   profile: String
   image: String
+  fein: String
+  tin: String
+  ssn: String
+  idType: String
+  percentOwner: Float
   sevenAwareAgree: Boolean
 }
 
@@ -46,6 +51,7 @@ type Form @model {
   businessZip: String
   businessZipPlus4: String
   agreeLexisNexis: Boolean
+  fullOwner: Boolean
 }
 
 type Notification @model {
