@@ -1,6 +1,8 @@
 import React from "react";
 import cx from "classnames";
 import { Switch, Route, Redirect } from "react-router-dom";
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
+
 
 import { useSelector } from 'react-redux';
 import {
@@ -27,7 +29,7 @@ var ps;
 
 const useStyles = makeStyles(styles);
 
-export default function Dashboard(props) {
+function Dashboard(props) {
   const { ...rest } = props;
   // states and functions
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -158,3 +160,5 @@ export default function Dashboard(props) {
     </div>
   );
 }
+
+export default withAuthenticator(Dashboard);
