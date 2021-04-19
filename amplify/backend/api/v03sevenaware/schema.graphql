@@ -51,6 +51,12 @@ type Form @model {
   businessZip: String
   businessZipPlus4: String
   agreeLexisNexis: Boolean
+  lexisnexisAddress1: String
+  lexisnexisAddress2: String
+  lexisnexisCity: String
+  lexisnexisState: String
+  lexisnexisZip: String
+  lexisnexisZipPlus4: String
   fullOwner: Boolean
 }
 
