@@ -6,6 +6,7 @@ export const getUser = /* GraphQL */ `
     getUser(id: $id) {
       id
       userId
+      formId
       userType
       email
       password
@@ -42,6 +43,7 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         userId
+        formId
         userType
         email
         password
@@ -147,18 +149,63 @@ export const listForms = /* GraphQL */ `
     }
   }
 `;
+export const getAddress = /* GraphQL */ `
+  query GetAddress($id: ID!) {
+    getAddress(id: $id) {
+      id
+      userId
+      addressType
+      address1
+      address2
+      city
+      state
+      zip
+      zipPlus4
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listAddresss = /* GraphQL */ `
+  query ListAddresss(
+    $filter: ModelAddressFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAddresss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userId
+        addressType
+        address1
+        address2
+        city
+        state
+        zip
+        zipPlus4
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getNotification = /* GraphQL */ `
   query GetNotification($id: ID!) {
     getNotification(id: $id) {
       id
       fromUserId
       toUserId
+      fromEmail
+      toEmail
       action
       status
       color
       badgeIcon
       title
       body
+      emailBody
+      smsBody
       footerTitle
       createdAt
       updatedAt
@@ -176,12 +223,16 @@ export const listNotifications = /* GraphQL */ `
         id
         fromUserId
         toUserId
+        fromEmail
+        toEmail
         action
         status
         color
         badgeIcon
         title
         body
+        emailBody
+        smsBody
         footerTitle
         createdAt
         updatedAt

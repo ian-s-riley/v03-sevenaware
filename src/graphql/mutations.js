@@ -9,6 +9,7 @@ export const createUser = /* GraphQL */ `
     createUser(input: $input, condition: $condition) {
       id
       userId
+      formId
       userType
       email
       password
@@ -43,6 +44,7 @@ export const updateUser = /* GraphQL */ `
     updateUser(input: $input, condition: $condition) {
       id
       userId
+      formId
       userType
       email
       password
@@ -77,6 +79,7 @@ export const deleteUser = /* GraphQL */ `
     deleteUser(input: $input, condition: $condition) {
       id
       userId
+      formId
       userType
       email
       password
@@ -217,6 +220,66 @@ export const deleteForm = /* GraphQL */ `
     }
   }
 `;
+export const createAddress = /* GraphQL */ `
+  mutation CreateAddress(
+    $input: CreateAddressInput!
+    $condition: ModelAddressConditionInput
+  ) {
+    createAddress(input: $input, condition: $condition) {
+      id
+      userId
+      addressType
+      address1
+      address2
+      city
+      state
+      zip
+      zipPlus4
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateAddress = /* GraphQL */ `
+  mutation UpdateAddress(
+    $input: UpdateAddressInput!
+    $condition: ModelAddressConditionInput
+  ) {
+    updateAddress(input: $input, condition: $condition) {
+      id
+      userId
+      addressType
+      address1
+      address2
+      city
+      state
+      zip
+      zipPlus4
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteAddress = /* GraphQL */ `
+  mutation DeleteAddress(
+    $input: DeleteAddressInput!
+    $condition: ModelAddressConditionInput
+  ) {
+    deleteAddress(input: $input, condition: $condition) {
+      id
+      userId
+      addressType
+      address1
+      address2
+      city
+      state
+      zip
+      zipPlus4
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createNotification = /* GraphQL */ `
   mutation CreateNotification(
     $input: CreateNotificationInput!
@@ -226,12 +289,16 @@ export const createNotification = /* GraphQL */ `
       id
       fromUserId
       toUserId
+      fromEmail
+      toEmail
       action
       status
       color
       badgeIcon
       title
       body
+      emailBody
+      smsBody
       footerTitle
       createdAt
       updatedAt
@@ -247,12 +314,16 @@ export const updateNotification = /* GraphQL */ `
       id
       fromUserId
       toUserId
+      fromEmail
+      toEmail
       action
       status
       color
       badgeIcon
       title
       body
+      emailBody
+      smsBody
       footerTitle
       createdAt
       updatedAt
@@ -268,12 +339,16 @@ export const deleteNotification = /* GraphQL */ `
       id
       fromUserId
       toUserId
+      fromEmail
+      toEmail
       action
       status
       color
       badgeIcon
       title
       body
+      emailBody
+      smsBody
       footerTitle
       createdAt
       updatedAt

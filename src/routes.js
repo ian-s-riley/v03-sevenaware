@@ -39,6 +39,7 @@ import BusinessAddress from "views/SevenAForms/BusinessAddress";
 import AgreeLexisNexis from "views/SevenAForms/AgreeLexisNexis";
 import Owner from "views/SevenAForms/Owner";
 import Owners from "views/SevenAForms/Owners";
+import SendNotification from "components/Notifications/SendNotification"
 
 // @material-ui/icons
 import Apps from "@material-ui/icons/Apps";
@@ -66,6 +67,14 @@ var dashRoutes = [
     component: LenderDashboard,
     layout: "/admin",
     invisible: true
+  },
+  {
+    path: "/send-notification",
+    name: "Send Notification",
+    icon: Apps,
+    component: SendNotification,
+    layout: "/admin",
+    invisible: false
   },
   {
     path: "/dashboard",

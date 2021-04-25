@@ -6,6 +6,7 @@ export const onCreateUser = /* GraphQL */ `
     onCreateUser {
       id
       userId
+      formId
       userType
       email
       password
@@ -37,6 +38,7 @@ export const onUpdateUser = /* GraphQL */ `
     onUpdateUser {
       id
       userId
+      formId
       userType
       email
       password
@@ -68,6 +70,7 @@ export const onDeleteUser = /* GraphQL */ `
     onDeleteUser {
       id
       userId
+      formId
       userType
       email
       password
@@ -199,18 +202,73 @@ export const onDeleteForm = /* GraphQL */ `
     }
   }
 `;
+export const onCreateAddress = /* GraphQL */ `
+  subscription OnCreateAddress {
+    onCreateAddress {
+      id
+      userId
+      addressType
+      address1
+      address2
+      city
+      state
+      zip
+      zipPlus4
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateAddress = /* GraphQL */ `
+  subscription OnUpdateAddress {
+    onUpdateAddress {
+      id
+      userId
+      addressType
+      address1
+      address2
+      city
+      state
+      zip
+      zipPlus4
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteAddress = /* GraphQL */ `
+  subscription OnDeleteAddress {
+    onDeleteAddress {
+      id
+      userId
+      addressType
+      address1
+      address2
+      city
+      state
+      zip
+      zipPlus4
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateNotification = /* GraphQL */ `
   subscription OnCreateNotification {
     onCreateNotification {
       id
       fromUserId
       toUserId
+      fromEmail
+      toEmail
       action
       status
       color
       badgeIcon
       title
       body
+      emailBody
+      smsBody
       footerTitle
       createdAt
       updatedAt
@@ -223,12 +281,16 @@ export const onUpdateNotification = /* GraphQL */ `
       id
       fromUserId
       toUserId
+      fromEmail
+      toEmail
       action
       status
       color
       badgeIcon
       title
       body
+      emailBody
+      smsBody
       footerTitle
       createdAt
       updatedAt
@@ -241,12 +303,16 @@ export const onDeleteNotification = /* GraphQL */ `
       id
       fromUserId
       toUserId
+      fromEmail
+      toEmail
       action
       status
       color
       badgeIcon
       title
       body
+      emailBody
+      smsBody
       footerTitle
       createdAt
       updatedAt
